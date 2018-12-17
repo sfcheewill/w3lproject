@@ -182,7 +182,7 @@
             
             	<!-- User Photo -->
             	<div id="mws-user-photo">
-                	<img src="/static/admins/example/profile.jpg" alt="User Photo">
+                	<a href="/admin"><img src="/static/admins/example/profile.jpg" alt="User Photo"></a>
                 </div>
                 
                 <!-- Username and Functions -->
@@ -191,8 +191,8 @@
                         {{session('name')}}
                     </div>
                     <ul>
-                    	<li><a href="#">Profile</a></li>
-                        <li><a href="#">Change Password</a></li>
+                    	<li><a href="/admin/{{session('id')}}">Authority</a></li>
+                        <li><a href="/admin/{{session('id')}}/edit">Change Password</a></li>
                         <li><a href="/adminlogin">Logout</a></li>
                     </ul>
                 </div>
@@ -250,10 +250,9 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="icol32-user"></i> 用户管理</a>
+                        <a href="#"><i class="icol32-user"></i> 会员管理</a>
                         <ul class="closed">
-                            <li><a href="/adminusers/create">用户添加</a></li>
-                            <li><a href="/adminusers">用户列表</a></li>
+                            <li><a href="/adminusers">会员列表</a></li>
                         </ul>
                     </li>
 
@@ -264,7 +263,22 @@
                             <li><a href="/admincate">分类列表</a></li>
                         </ul>
                     </li>
+                    
+                     <li>
+                        <a href="#"><i class="icol32-handbag"></i> 商品管理</a>
+                        <ul class="closed">
+                            <li><a href="/admingoods/create">商品添加</a></li>
+                            <li><a href="/admingoods">商品列表</a></li>
+                        </ul>
+                    </li>
 
+                    <li>
+                        <a href="#"><i class="icol32-bell"></i> 公告管理</a>
+                        <ul class="closed">
+                            <li><a href="/adminnotice/create">公告添加</a></li>
+                            <li><a href="/adminnotice">公告列表</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>         
         </div>

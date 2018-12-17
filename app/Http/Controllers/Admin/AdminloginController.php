@@ -52,12 +52,16 @@ class AdminloginController extends Controller
             if(Hash::check($password,$info->password)){
                 //登录成功
                 //将信息存进session
-                session(['name'=>$name]);
+                session(['name'=>$name,'id'=>$info->id]);
                 //将登录会员权限列表添加进session
                 //获取登录会员的权限列表
                 $list = DB::select("select n.name,n.mname,n.aname from user_role as ur,role_node as rn,node as n where ur.rid=rn.rid and rn.nid=n.id and uid={$info->id}");
                 //初始化权限列表
-                $nodelist['AdminsController'][] = 'index';
+                //默认权限
+                $nodelist['AdminsController'][] = 'index';  //后台首页
+                $nodelist['AdminsController'][] = 'edit';   //加载修改密码模板   
+                $nodelist['AdminsController'][] = 'update'; //修改密码
+                $nodelist['AdminsController'][] = 'show';   //查看自己权限
                 foreach($list as $key=>$value){
                     $nodelist[$value->mname][] = $value->aname;
                     if($value->aname == 'create'){
@@ -70,7 +74,7 @@ class AdminloginController extends Controller
                 //存进session
                 session(['nodelist'=>$nodelist]);
                 //跳转到后台首页
-                return redirect('/admin');
+                return redirect('/admin')->with('success','登录成功');
             }else {
                 return back()->with('error','密码错误');
             }

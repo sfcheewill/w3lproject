@@ -14,6 +14,21 @@ class CateController extends Controller
      * @return \Illuminate\Http\Response
      */
     
+    //获取分类
+    public static function getCates(){
+      $data = DB::table('cate')->select(DB::raw('*,concat(path,",",id) as paths'))->orderBy('paths','asc')->get();
+        //遍历
+        foreach($data as $key=>$value){
+            //计算逗号
+            $arr = explode(',',$value->path);
+            $len = count($arr)-1;
+            //添加分隔符
+            $data[$key]->name = str_repeat('--|',$len) . $value->name;
+        }
+        //返回数据
+        return $data;
+    }
+
     //图片上传
     public static function uploads($file,$request){
         //文件后缀
@@ -34,15 +49,16 @@ class CateController extends Controller
         //获取关键词
         $keyword = $request->input('keyword');
         //获取数据
-        $data = DB::table('cate')->select(DB::raw('*,concat(path,",",id) as paths'))->where('name','like','%'.$keyword.'%')->orderBy('paths','asc')->paginate(5);
+        // $data = DB::table('cate')->select(DB::raw('*,concat(path,",",id) as paths'))->where('name','like','%'.$keyword.'%')->orderBy('paths','asc')->paginate(5);
+        $data = DB::table('cate')->where('pid','=',0)->orderBy('id','asc')->paginate(5);
         //遍历
-        foreach($data as $key=>$value){
-            //计算逗号
-            $arr = explode(',',$value->path);
-            $len = count($arr)-1;
-            //添加分隔符
-            $data[$key]->name = str_repeat('--|',$len) . $value->name;
-        }
+        // foreach($data as $key=>$value){
+        //     //计算逗号
+        //     $arr = explode(',',$value->path);
+        //     $len = count($arr)-1;
+        //     //添加分隔符
+        //     $data[$key]->name = str_repeat('--|',$len) . $value->name;
+        // }
         //加载分类列表模板
         return view('Admin.Cate.index',['data'=>$data,'request'=>$request->all()]);
     }
@@ -108,7 +124,12 @@ class CateController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = DB::table('cate')->where('pid','=',$id)->orderBy('id','asc')->paginate(5);
+        if(empty($data[0])){
+            return back()->with('error','已经是最底级分类');
+        }
+        //加载模板
+        return view('Admin.Cate.show',['data'=>$data]);
     }
 
     /**
@@ -147,7 +168,7 @@ class CateController extends Controller
             $data['pic'] = ltrim(self::uploads('pic',$request),'.');
             //删除原来的logo图片
             $oldpic = DB::table('cate')->where('id','=',$id)->value('pic');
-            \File::delete($oldpic);
+            unlink('.'.$oldpic);
         }else {
             $data = $request->except(['_token','_method','pic']);            
         }
@@ -171,10 +192,12 @@ class CateController extends Controller
         //判断是否有子类
         $res = DB::table('cate')->where('pid','=',$id)->count();
         if($res > 0){
-            return back()->with('error',',该分类有子类,无法删除');
+            return back()->with('error','该分类有子类,无法删除');
         }
+        $img = DB::table('cate')->where('id','=',$id)->value('pic');
         //执行删除
         if(DB::table('cate')->where('id','=',$id)->delete()){
+          unlink('.'.$img);
           return redirect('/admincate')->with('success','删除分类成功');  
         }else {
             return redirect('/adminuser')->with('error','删除分类失败');

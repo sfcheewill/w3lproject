@@ -17,7 +17,46 @@ Route::get('/', function () {
 
 //加载前台首页
 Route::resource('/homeindex','Home\IndexController');
-
+//加载前台公告
+Route::resource('/homenotice','Home\NoticeController');
+//前台用户注册
+Route::resource('/homeregister','Home\RegisterController');
+//验证码
+Route::get('/code','Home\RegisterController@code');
+//短信验证码
+Route::get('/phone','Home\RegisterController@phone');
+//检测短信验证码
+Route::get('/checkcode','Home\RegisterController@checkcode');
+//检测邮箱
+Route::get('/checkemail','Home\RegisterController@checkemail');
+//检测手机号码
+Route::get('/checkphone','Home\RegisterController@checkphone');
+//前台登录
+Route::resource('/homelogin','Home\LoginController');
+//邮件激活账号
+Route::get('/homestatus','Home\LoginController@status');
+//加载忘记密码
+Route::get('forget','Home\LoginController@forget');
+//检测账号
+Route::get('/checkAccount','Home\LoginController@checkAccount');
+//检测图形验证码
+Route::get('/checkvcode','Home\LoginController@checkvcode');
+//加载检测邮箱验证码
+Route::post('/emailcode','Home\LoginController@emailcode');
+//发送邮箱验证码
+Route::get('/sendEmailCode','Home\LoginController@sendEmailCode');
+//检测邮箱验证码
+Route::get('/checkemailcode','Home\LoginController@checkemailcode');
+//加载设置新密码
+Route::post('/newPass','Home\LoginController@newPass');
+//设置新密码
+Route::post('/setNewPass','Home\LoginController@setNewPass');
+//商品列表
+Route::get('/homegoodslist/{id}','Home\IndexController@goodslists');
+//商品详情
+Route::get('/homegoodsinfo/{id}','Home\IndexController@goodsinfo');
+//更换商品颜色
+Route::get('/goodscolor','Home\IndexController@goodscolor');
 
 //后台登录
 Route::resource('/adminlogin','Admin\AdminloginController');
@@ -46,4 +85,24 @@ Route::group(['middleware'=>'adminlogin'],function(){
 	Route::resource('adminnodelist','Admin\NodelistController');
 	//修改权限状态
 	Route::get('/nodeedit','Admin\NodelistController@nodeedit');
+	//公告管理
+	Route::resource('/adminnotice','Admin\NoticeController');
+	//批量删除公告
+	Route::get('/noticedel','Admin\NoticeController@del');
+	//商品管理
+	Route::resource('/admingoods','Admin\GoodsController');
+	//添加规格
+	Route::get('/admingoods/{id}/spec','Admin\GoodsController@spec');
+	//保存规格
+	Route::post('/adminsavespec','Admin\GoodsController@savespec');
+	//商品规格管理
+	Route::resource('/admingoodsspec','Admin\GoodsspecController');
+	//添加规格详情
+	Route::get('/admingoodsspec/{id}/addinfo','Admin\GoodsspecController@addinfo');
+	//保存商品规格详情
+	Route::post('/adminsavespecinfo','Admin\GoodsspecController@saveinfo');
+	//商品规格详情管理
+	Route::resource('/adminspecinfo','Admin\GoodsspecinfoController');
+	//会员管理
+	Route::resource('/adminusers','Admin\UsersController');
 });
