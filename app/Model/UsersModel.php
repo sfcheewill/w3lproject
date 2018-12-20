@@ -18,4 +18,9 @@ class UsersModel extends Model
     	$status = [1=>'未激活',2=>'已激活'];
     	return $status[$value];
     }
+
+    //获取与会员关联的地址信息
+    public function Usercity(){
+        return $this->hasMany('App\Model\Usercity','uid');
+    }
 }

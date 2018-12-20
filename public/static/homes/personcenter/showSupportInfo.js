@@ -1,0 +1,1 @@
+(function(){if(localInfo.needShowCompleteAge=="true"){$(".menuSlt_info_circle_red").show()}})();

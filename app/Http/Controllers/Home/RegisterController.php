@@ -80,6 +80,7 @@ class RegisterController extends Controller
         if($row = UsersModel::create($data)){
             //为用户创建默认个人信息
             $info['uid'] = $row->id;
+            $info['status'] = 1;
             $info['pic'] = '/uploads/users_info/2018-12-14/img_logged_in.png';
             UserinfoModel::create($info);
             return redirect('/homelogin/create');

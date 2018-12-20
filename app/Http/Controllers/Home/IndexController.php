@@ -47,8 +47,20 @@ class IndexController extends Controller
         //商品列表
         $goods = DB::table('goods')->join('cate','goods.cate_id','=','cate.id')->select('goods.name as gname','goods.price as gprice','goods.logo as glogo','cate.pid as cid','goods.id as gid')->get();
 
+        //轮播图
+        $slide = DB::table('slideshow')->offset(0)->limit(8)->get();
+        //获取顶部广告图片
+        $adverti = DB::table('advertise')->orderBy('addtime','desc')->first();
+
+        //个人信息
+        $uid = session('uid');
+        $users_info = DB::table('users_info')->where('uid','=',$uid)->first();
+
+        //查询出友情链接的数据
+        $link = DB::select('select * from link order By id asc limit 0,5');
+
         //加载前台首页
-        return view('Home.Index.index',['cate'=>$cate,'notices'=>$notices,'hotgoods'=>$hotgoods,'goods'=>$goods]);
+        return view('Home.Index.index',['cate'=>$cate,'notices'=>$notices,'hotgoods'=>$hotgoods,'goods'=>$goods,'slide'=>$slide,'adverti'=>$adverti,'users_info'=>$users_info,'link'=>$link]);
     }
 
     /**
@@ -129,7 +141,12 @@ class IndexController extends Controller
             $data = DB::table('cate')->join('goods','cate.id','=','goods.cate_id')->where('cate.pid','=',$id)->select('goods.name as gname','goods.logo as glogo','goods.price as gprice','goods.id as gid')->get();
             //获取分类
             $cate = DB::table('cate')->where('pid','=',$id)->get();
-            return view('Home.Index.goodslist',['data'=>$data,'info'=>$info,'cate'=>$cate]);        
+
+            //个人信息
+            $uid = session('uid');
+            $users_info = DB::table('users_info')->where('uid','=',$uid)->first();
+
+            return view('Home.Index.goodslist',['data'=>$data,'info'=>$info,'cate'=>$cate,'users_info'=>$users_info]);        
         }else {
             //子集分类 
             $info->pids = $info->pid;
@@ -137,7 +154,16 @@ class IndexController extends Controller
             $data = DB::table('cate')->join('goods','cate.id','=','goods.cate_id')->where('cate.id','=',$id)->select('goods.name as gname','goods.logo as glogo','goods.price as gprice','goods.id as gid')->get();
             //获取分类
             $cate = DB::table('cate')->where('pid','=',$info->pid)->get();
-            return view('Home.Index.goodslist',['data'=>$data,'info'=>$info,'cate'=>$cate]);
+
+            //个人信息
+            $uid = session('uid');
+            $users_info = DB::table('users_info')->where('uid','=',$uid)->first();
+            
+            //查询出友情链接的数据
+            $link = DB::select('select * from link order By id asc limit 0,5');
+
+            //加载模板
+            return view('Home.Index.goodslist',['data'=>$data,'info'=>$info,'cate'=>$cate,'users_info'=>$users_info,'link'=>$link]);
         }
     }
 
@@ -155,12 +181,50 @@ class IndexController extends Controller
         $info = DB::table('spec_info')->where('spec_id','=',$spec[0]->id)->orderBy('id','asc')->get();
         //获取面包屑
         $crumbs = self::getParents($goods->cate_id);
-        return view('Home.Index.goodsinfo',['crumbs'=>$crumbs,'goods'=>$goods,'info'=>$info,'spec'=>$spec]);
+
+        //个人信息
+        $uid = session('uid');
+        $users_info = DB::table('users_info')->where('uid','=',$uid)->first();
+
+        //查询出友情链接的数据
+        $link = DB::select('select * from link order By id asc limit 0,5');
+
+        //加载模板
+        return view('Home.Index.goodsinfo',['crumbs'=>$crumbs,'goods'=>$goods,'info'=>$info,'spec'=>$spec,'users_info'=>$users_info,'link'=>$link]);
     }
 
-    //更换商品颜色
+    //选择商品颜色
     public function goodscolor(Request $request){
         $cid = $request->input('cid');
-        echo $cid;
+        //获取数据
+        $data = DB::table('goods_spec')->where('id','=',$cid)->first();
+        $data->info = DB::table('spec_info')->where('spec_id','=',$data->id)->get();
+        $data->pic = explode('@',$data->pic);
+        echo json_encode($data);
+        // dd($data);
     }
+
+    //选择商品版本
+    public function specinfo(Request $request){
+        //获取数据
+        $vid = $request->input('vid');
+        $data = DB::table('spec_info')->where('id','=',$vid)->first();
+        $data->color = DB::table('goods_spec')->where('id','=',$data->spec_id)->value('color');
+        echo json_encode($data);
+        // dd($data);
+    }
+
+    //选择商品数量追加
+    public function goodsadd(Request $request){
+        $gid = $request->input('gid');
+        $sum = $request->input('sum');        
+        //获取库存
+        $repertory = DB::table('spec_info')->where('id','=',$gid)->value('repertory');
+        if($sum > $repertory){
+            //超出库存
+            return 'error';
+        }else {
+            return 'success';
+        }
+    } 
 }

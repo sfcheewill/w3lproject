@@ -28,7 +28,7 @@
    <div class="customer-header"> 
     <div class="head_center"> 
      <div class="main-logo adHeadPicContainer"> 
-      <img src="/static/homes/login/HUAWEI.png" class="adHeadPic" /> 
+      <a href="/homeindex"><img src="/static/homes/login/HUAWEI.png" class="adHeadPic" /></a> 
      </div> 
      <div class="website-name"> 
       <b style="font-size: 18px;margin-top: -5px;float: left;color:#cccccc;">|</b> 

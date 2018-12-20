@@ -92,4 +92,12 @@ class UsersController extends Controller
     {
         //
     }
+
+    //获取会员地址列表的方法
+    public function Usercity($id){
+        //从数据库获取地址数据
+        $data = UsersModel::find($id)->Usercity;
+        //加载模板
+        return view('Admin.Users.city',['data'=>$data]);
+    }
 }

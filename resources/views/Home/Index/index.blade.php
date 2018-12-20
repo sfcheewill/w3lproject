@@ -1,3 +1,19 @@
+<div class="top-banner-min hide baxs" id="top-banner-min" style="display: block; background-color: rgba(0, 0, 0, 0); overflow: hidden;">
+    <div class="top-banner-img">
+      <p style="font-size:0;">
+        <a style="display:block;position:relative;width:1920px;text-align:center;left:50%;background-color:;margin-left:-960px;" title="{{$adverti->title}}" target="_blank" href="javascript:void(0)">
+          <img src="{{$adverti->pic}}" title="{{$adverti->title}}">
+        </a>
+      </p>
+      <a class="button-top-banner-close" href="javascript:void(0)" title="关闭" id="top-banner-min-close">关闭</a>
+    </div>
+</div>
+<script src="/jq/jquery-1.7.2.min.js"></script>
+<script>
+  $('#top-banner-min-close').click(function(){
+     $('.baxs').css("display","none");
+  }) 
+</script>
 @extends('Home.HomePublic.public')
 @section('title','商城首页')
 @section('content')
@@ -507,30 +523,32 @@ $("#category-block .category-panels.relative").find("a").each(function(){$(this)
    <!--ads start--> 
    <div class="ec-slider" id="index_slider" style="width: 100%; height: 550px;"> 
     <ul style="width: 100%; height: 550px;"> 
-     <li id="firstImg" style="background: url('https://res.vmallres.com/pimages//sale/2018-12/8m9QINvYnQPiDDW0GsR0.jpg') 50% 0px no-repeat; ; width: 100%; height: 550px; display: block; position: absolute;" class="ec-slider-item">
-      <div style="width:100%;" class="ec-slider-item-img">
-       <a style="width:100%;height:550px;display:block;" href="https://sale.vmall.com/1212.html" target="_blank" onclick="pushSliderMsg('https://res.vmallres.com/pimages//sale/2018-12/8m9QINvYnQPiDDW0GsR0.jpg','https://sale.vmall.com/1212.html','1')"></a>
-      </div></li> 
-     <li class="ec-slider-item" style="background: url(&quot;https://res.vmallres.com/pimages//sale/2018-12/OUyqwkqoyWw95hVxeZF1.jpg&quot;) 50% 0px no-repeat; width: 100%; height: 550px; position: absolute; display: none;">
-      <div style="width:100%;" class="ec-slider-item-img">
-       <a style="width:100%;height:550px;display:block;" href="https://sale.vmall.com/huawei.html" target="_blank" onclick="pushSliderMsg('https://res.vmallres.com/pimages//sale/2018-12/OUyqwkqoyWw95hVxeZF1.jpg','https://sale.vmall.com/huawei.html',2);"></a>
-      </div></li>
-     
-    </ul> 
+    @foreach($slide as $value)
+      <li class="ec-slider-item" style="background: url('{{$value->picture}}') 50% 0px no-repeat; width: 100%; height: 550px; position: absolute; display: block;">
+       <!--  <div style="width:100%;" class="ec-slider-item-img">
+         <a style="width:100%;height:550px;display:block;" href="https://sale.vmall.com/huawei.html" target="_blank" onclick="pushSliderMsg('https://res.vmallres.com/pimages//sale/2018-12/OUyqwkqoyWw95hVxeZF1.jpg','https://sale.vmall.com/huawei.html',2);"></a>
+        </div> -->
+      </li>
+    @endforeach
+    </ul>    
+    <!--   <li id="firstImg" style="background: url('{{$value->picture}}') 50% 0px no-repeat; ; width: 100%; height: 550px; display: block; position: absolute;" class="ec-slider-item">
+        <div style="width:100%;" class="ec-slider-item-img">
+         <a style="width:100%;height:550px;display:block;" href="https://sale.vmall.com/1212.html" target="_blank" onclick="pushSliderMsg('https://res.vmallres.com/pimages//sale/2018-12/8m9QINvYnQPiDDW0GsR0.jpg','https://sale.vmall.com/1212.html','1')"></a>
+        </div>
+      </li>  --> 
     <div class="ec-slider-middle">
-     <div class="ec-slider-nav-1">
-      <span class=""></span>
-      <span class=""></span>
-      <span class=""></span>
-      <span class=""></span>
-      <span class=""></span>
-      <span class=""></span>
-      <span class=""></span>
-      <span class="current"></span>
-      <span></span>
+     <div class="ec-slider-nav-1 yuandian">
+      <span style="background-color:#f5f5f508" onmouseover="demo(0)" onmouseout="demo1(0)"></span>
+      <span style="background-color:#f5f5f508" onmouseover="demo(1)" onmouseout="demo1(1)"></span>
+      <span style="background-color:#f5f5f508" onmouseover="demo(2)" onmouseout="demo1(2)"></span>
+      <span style="background-color:#f5f5f508" onmouseover="demo(3)" onmouseout="demo1(3)"></span>
+      <span style="background-color:#f5f5f508" onmouseover="demo(4)" onmouseout="demo1(4)"></span>
+      <span style="background-color:#f5f5f508" onmouseover="demo(5)" onmouseout="demo1(5)"></span>
+      <span style="background-color:#f5f5f508" onmouseover="demo(6)" onmouseout="demo1(6)"></span>
+      <span tyle="background-color:#FFF" onmouseover="demo(7)" onmouseout="demo1(7)"></span>
      </div>
-     <a class="button-slider-prev button-slider-prev-high" href="javascript:;"></a>
-     <a class="button-slider-next button-slider-next-high" href="javascript:;"></a>
+     <a class="button-slider-prev button-slider-prev-high lefts" href="javascript:;"></a>
+     <a class="button-slider-next button-slider-next-high rights" href="javascript:;"></a>
     </div>
    </div> 
    <ul></ul>
@@ -540,6 +558,93 @@ $("#category-block .category-panels.relative").find("a").each(function(){$(this)
    </div> 
    <!--ads end--> 
   </div>
+  <!-- 轮播图控制 -->
+  <script src="jq/jquery-1.7.2.min.js"></script>  
+  <script> 
+    m=0;
+    // 获取到 图片对象
+    list = $('#index_slider').children().find('li');
+    //获取圆点 对象啊
+    yuandian = $('.yuandian').children();
+    //按钮
+    $('.lefts').click(function(){
+      // 清空定时器让轮播图停止
+      clearInterval(timmer);
+      m = m-2;
+      if(m == -1){
+        m = (list.length - 1);
+      }
+      running();
+      //调用定时器
+      timmer=setInterval(running,2000);
+    });
+
+    $('.rights').click(function(){
+      // 清空定时器让轮播图停止
+      clearInterval(timmer);
+      running();
+      //调用定时器
+      timmer=setInterval(running,2000);
+      
+    });
+    //鼠标移入
+    function demo(a) {
+      //清除定时器
+      clearInterval(timmer);
+      for (var i = 0;i < yuandian.length;i++) {
+        // console.log(list1[i]);
+        if (a == i) {
+          //把图片a对应的图片显示出来
+          list[a].style.display="block";
+          //让选中的数字按钮变个背景颜色pink
+          yuandian[i].style.backgroundColor="#FFF";
+        }else{
+          //让不是a 的这个图片隐藏
+          list[i].style.display = "none";
+          //将其他的按钮变为原来的颜色
+          yuandian[i].style.backgroundColor="#f5f5f508";
+        }
+      }
+    }
+    // 鼠标移除2
+    function demo1(b){
+      // alert(b);
+      //将移除的图片放在列中
+      m = b--;
+      //恢复图片运动
+      running();
+      //恢复定时器
+      timmer = setInterval(running,2000);
+    }
+    // 让图片跑动
+    function running(){
+     
+      if (m == list.length ) {
+        m=0;
+      }
+      show(m); 
+      m++;
+    }
+    //显示图片
+    function show(m){
+      // alert(m);
+      for (var i = 0; i < list.length; i++) {
+        if (i == m) {
+          //显示图片
+          list[i].style.display = "block";
+          //改变颜色
+          yuandian[i].style.backgroundColor = '#FFF';
+        }else{
+          //隐藏图片
+          list[i].style.display = "none";
+          //隐藏按钮颜色
+          yuandian[i].style.backgroundColor ='#f5f5f508';
+        }
+      }
+    }
+    //调用定时器
+    timmer = setInterval(running,2000);
+  </script>
   <!-- 20130904-热门板-end --> 
   <!--//20161123 弹出框--> 
   <!-- 2017-02-15-菜单栏-start --> 
@@ -553,7 +658,7 @@ $("#category-block .category-panels.relative").find("a").each(function(){$(this)
         @if(session('username'))
          <div id="gg_login" class="i-mall-prompt clearfix"> 
           <div class="relative fl w-name"> 
-           <a href="#" rel="nofollow" timetype="timestamp"> <img id="gg_customerPic" src="/static/homes/index/img_not_logged_in.png" alt="" /> </a> 
+           <a href="#" rel="nofollow" timetype="timestamp"> <img id="gg_customerPic" src="{{$users_info->pic}}" alt="" /> </a> 
           </div> 
           <div class="fl"> 
            <div class="w-info">

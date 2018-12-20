@@ -42,7 +42,7 @@
         <td class=" ">{{$value->updated_at}}</td> 
         <td class=" ">
           <a href="/adminusers/{{$value->id}}" class="btn btn-info">查看详情</a>
-          <a href="#" class="btn btn-primary">查看收货地址</a>
+          <a href="/Usercity/{{$value->id}}" class="btn btn-primary">查看收货地址</a>
         </td> 
        </tr>
        @endforeach

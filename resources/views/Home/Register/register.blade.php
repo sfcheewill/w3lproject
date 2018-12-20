@@ -22,7 +22,7 @@
   <div class="head-background"> 
    <div class="head_center"> 
     <div class="main-logo adHeadPicContainer" style="width:143px"> 
-     <img src="/static/homes/register/head-top.png" class="wihteBgPic" /> 
+     <a href="/homeindex"><img src="/static/homes/register/head-top.png" class="wihteBgPic" /> </a>
     </div> 
     <div class="website-name"> 
      <b style="font-size: 18px;margin-top: -5px;float: left;color:#cccccc;">|</b> 

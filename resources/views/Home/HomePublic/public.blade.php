@@ -175,7 +175,7 @@ var dapDomain='https://dap.vmall.com';
               </div> 
              </div> 
              <img src="/static/homes/index/bg71.png" class="user-img-shade" /> 
-             <p class="user-img"> <a href="/个人中心管理" rel="nofollow" timetype="timestamp" target="_blank"> <img id="customerPic" src="{{session('upic')}}" alt="默认头像"/> </a> </p> 
+             <p class="user-img"> <a href="/person" rel="nofollow" timetype="timestamp" target="_blank"> <img id="customerPic" src="{{$users_info->pic}}" alt="默认头像"/> </a> </p> 
             </div> 
             <div class="user-info fl"> 
              <a href="#" rel="nofollow" target="_blank"> 
@@ -363,7 +363,7 @@ var dapDomain='https://dap.vmall.com';
       <li> 
        <div class="s-dropdown s-dropdown-minicart"> 
         <div class="h h-wide" id="header-toolbar-minicart"> 
-         <a href="https://www.vmall.com/cart2?t=15438183439401543818506616" class="icon-minicart" rel="nofollow" timetype="timestamp" target="blank" onclick="pushMyCartMsg()"> <span>购物车(<span id="header-cart-total">0</span>)</span> </a> 
+         <a href="/homeshopcart" class="icon-minicart" rel="nofollow" timetype="timestamp" target="blank"> <span>购物车(<span id="header-cart-total">0</span>)</span> </a> 
         </div> 
         <div class="b" id="header-toolbar-minicart-content"> 
          <!-- 2017-06-19-迷你购物车-start --> 
@@ -482,35 +482,21 @@ var dapDomain='https://dap.vmall.com';
      </dl> 
      <dl class="s6" id="serverlink"> 
       <dt class="relative"> 
-       <p class="title">友情链接</p> 
+       <p class="title"><a href="/homelink">友情链接</a></p> 
        <p class="button"><span class="btn btn-prev disabled"> &lt; </span><span class="btn btn-next"> &gt; </span></p> 
       </dt> 
       <dd class=""> 
        <div class="service-list clearfix" style="width: 1431px;">
         <ol>
-         <li><a>华为集团</a></li>
-         <li><a href="#" target="_blank" textvalue="华为CBG官网">华为CBG官网</a></li>
-         <li><a >荣耀官网</a></li>
-         <li><a textvalue="花粉俱乐部">花粉俱乐部</a></li>
-         <li><a href="#" target="_blank">网站地图</a><br /></li>
-        </ol>
-        <ol>
-         <li><a>华为集团</a></li>
-         <li><a href="#" target="_blank" textvalue="华为CBG官网">华为CBG官网</a></li>
-         <li><a >荣耀官网</a></li>
-         <li><a textvalue="花粉俱乐部">花粉俱乐部</a></li>
-         <li><a href="#" target="_blank">网站地图</a><br /></li>
-        </ol><ol>
-         <li><a>华为集团</a></li>
-         <li><a href="#" target="_blank" textvalue="华为CBG官网">华为CBG官网</a></li>
-         <li><a >荣耀官网</a></li>
-         <li><a textvalue="花粉俱乐部">花粉俱乐部</a></li>
-         <li><a href="#" target="_blank">网站地图</a><br /></li>
+        @foreach($link as $row)
+        <li><a target="_blank" href="http://{{$row->url}}" rel="nofollow">{{$row->name}}</a></li>    
+        @endforeach
+       
         </ol>
        </div>
        
       </dd> 
-     </dl> 
+     </dl>  
     </div> 
     <div class="service-r fl"> 
      <dl class="s7"> 

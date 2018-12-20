@@ -788,7 +788,7 @@ $("body").addClass("wide detail");
     @endforeach
     <!-- <a href="https://www.vmall.com/list-40" title="笔记本 &amp; 平板">笔记本 &amp; 平板</a>&nbsp;&gt;&nbsp; -->
     <!-- <a href="https://www.vmall.com/list-41" title="平板电脑">平板电脑</a>&nbsp;&gt;&nbsp;  -->
-    <span id="bread-pro-name">{{$goods->name}} {{$info[0]->desc}}</span>
+    <span id="bread-pro-name">{{$info[0]->desc}}</span>
    </div> 
   </div> 
   <div class="hr-10"></div> 
@@ -833,7 +833,7 @@ $("body").addClass("wide detail");
        </ul> 
        <script>
           //显示大图
-          $('#pro-gallerys li').click(function(){
+          $('#pro-gallerys li').live('click',function(){
             $('#product-img img').attr('src',$(this).find('img').attr('src'));
           });
        </script>
@@ -853,7 +853,7 @@ $("body").addClass("wide detail");
      <div id="product-property-recommand"> 
       <!-- 20170518-商品简介-商品信息-start --> 
       <div class="product-meta"> 
-       <h1 id="pro-name">{{$goods->name}} {{$info[0]->desc}}</h1> 
+       <h1 id="pro-name">{{$info[0]->desc}}</h1> 
        <input class="hide" value="348824011" id="product_sku" /> 
        <input class="hide" value="241920871" id="product_productId" /> 
        <div class="product-slogan" id="skuPromWord" style="display: -webkit-box;">
@@ -1058,7 +1058,7 @@ $(function() {
        <dl class="product-choose clearfix ">
         <label>选择版本</label>
         <div class="product-choose-detail ">
-         <ul>
+         <ul id="version">
          @foreach($info as $i)
           <li class="attr2 @if($info[0]->id==$i->id) selected @endif" data-attrname="版本" data-attrcode="733605" data-attrid="{{$i->id}}" data-skuid="348824011">
            <div class="sku">
@@ -1167,7 +1167,7 @@ $(function() {
          <!-- 20170518-商品简介-购买数量-start --> 
          <div class="product-stock" id="pro-quantity-area"> 
           <input id="pro-quantity" type="text" class="product-stock-text" placeholder="1" value="1" />
-          <p class="product-stock-btn"><a id="pro-quantity-plus" href="javascript:;">+</a><a id="pro-quantity-minus" href="javascript:;" class="disabled">−</a></p> 
+          <p class="product-stock-btn"><a id="pro-quantity-plus" href="javascript:;" onclick="quantity(this,'+')">+</a><a id="pro-quantity-minus" href="javascript:;" class="disabled" onclick="quantity(this,'-')">−</a></p> 
          </div> 
          <div class="product-stock hide" id="pro-quantity-area-nochange" style="display: none;"> 
           <input type="text" class="product-stock-text" placeholder="1" value="1" disabled="disabled" /> 
@@ -1177,7 +1177,7 @@ $(function() {
          <div class="product-buttonmain"> 
           <!-- 20170518-商品简介-按钮-start --> 
           <div id="pro-operation" class="product-button clearfix" style="visibility: visible;">
-           <a href="javascript:;" onclick="ec.product.addCart()" class="product-button01"><span>加入购物车</span></a>
+           <a href="javascript:;" onclick="addCart()" class="product-button01"><span>加入购物车</span></a>
            <a href="javascript:;" onclick="ec.product.orderNow()" class="product-button02"><span>立即下单</span></a>
           </div> 
           <!-- 20170518-商品简介-按钮-end --> 
@@ -1239,17 +1239,79 @@ $(function() {
     //处理页面数据
     //选择颜色
     $('.attr1').click(function(){
+      var cindex = $(this).index();
+      //改变样式
+      $('.attr1').each(function(i){
+        if(i == cindex){
+          $(this).addClass('selected');
+        }else{
+          $(this).removeClass('selected');
+        }
+      });
+      //获取选中的版本的索引
+      $('.attr2').each(function(){
+        if($(this).hasClass('selected')){
+          vindex = $(this).index();
+        }
+      });
       //获取id
       var cid = $(this).attr('data-attrid');
       //Ajax
       $.get('/goodscolor',{cid:cid},function(data){
-         alert(data);
-      });
+         //修改图片
+         $('#pro-gallerys').empty();
+         // 创建图片
+         for(var i = 0; i < data.pic.length; i++){
+            var s = $('<li class=""><a href="javascript:;"><img src="'+data.pic[i]+'" alt="data.color" /></a></li>');
+            //添加到ul中
+            $('#pro-gallerys').append(s);
+         }
+
+        //修改版本数据
+        $('#version').empty();
+        //创建版本
+        for(var i = 0; i < data.info.length; i++){
+          var li = $('<li class="attr2" data-attrname="版本" data-attrcode="733605" data-attrid="'+data.info[i].id+'" data-skuid="348824011"></li>');
+          if(i == vindex){
+            li.addClass('selected');
+          }
+          var div = $('<div class="sku"><a href="javascript:;" title="'+data.info[i].version+'"><p><span>'+data.info[i].version+'</span></p></a></div>');
+          li.append(div);
+          $('#version').append(li);
+        }
+        //修改面包屑
+        $('#bread-pro-name').html(data.info[vindex].desc);
+        //修改标题
+        $('#pro-name').html(data.info[vindex].desc);
+        //修改已选择商品
+        $('#pro-select-sku').html(data.color + " /" + data.info[vindex].version + " /" + "官方标配");
+      },'json');
     });
 
     //选择版本
-    $('.attr2').click(function(){
-      alert(2);
+    $('.attr2').live('click',function(){
+      //改变样式
+      var v = $(this).index();
+      $('.attr2').each(function(i){
+        if(v == i){
+          $(this).addClass('selected');
+        }else {
+          $(this).removeClass('selected');
+        }
+      });
+      //获取id
+      var vid = $(this).attr('data-attrid');
+      //ajax
+      $.get('/specinfo',{vid:vid},function(data){
+        //修改面包屑
+        $('#bread-pro-name').html(data.desc);
+        //修改标题
+        $('#pro-name').html(data.desc);
+        //修改已选择商品
+        $('#pro-select-sku').html(data.color + " /" + data.version + " /" + "官方标配");
+        //修改价格
+        $('#pro-price').html('<em>&yen;</em>'+data.price+".00");
+      },'json');
     });
     
   </script>
@@ -1354,4 +1416,67 @@ $(function() {
   <form action="https://www.vmall.com/product/241920871.html#" id="gotourl" method="get"></form> 
  </body>
 </html>
+<script>
+  // 数量增加修改
+  function quantity(obj,m){
+    //获取商品id
+    $('.attr2').each(function(){
+      if($(this).hasClass('selected')){
+        gid = $(this).attr('data-attrid');
+      }
+    });
+
+    switch(m){
+      case '+':
+        var sum = parseInt($('#pro-quantity').val()) + 1;
+        // 控制最大不能超过库存
+        $.get('/goodsadd',{sum:sum,gid:gid},function(data){
+          if(data == 'success'){
+            $(obj).removeClass('disabled');
+            $('#pro-quantity').val(sum);
+            if($('#pro-quantity').val() > 1){
+              $('#pro-quantity-minus').removeClass('disabled');
+            }
+          }else {
+            $(obj).addClass('disabled');
+          }
+        });
+        break;
+      case '-':
+        var sum = parseInt($('#pro-quantity').val()) - 1;
+        if(sum == 0){
+          $(obj).addClass('disabled');
+        }else {
+          $(obj).removeClass('disabled');
+          $('#pro-quantity').val(sum);
+          $('#pro-quantity-plus').removeClass('disabled');
+        } 
+        break;
+    }
+  }     
+
+  //添加购物车
+  function addCart(){
+    //获取商品id
+    $('.attr2').each(function(){
+      if($(this).hasClass('selected')){
+        gid = $(this).attr('data-attrid');
+      }
+    });
+    //获取商品数量
+    var quantity = $('#pro-quantity').val();
+    //Ajax
+    $.get('/addshopcart',{gid:gid,quantity:quantity},function(data){
+      if(data == 'success'){
+        //添加成功
+        var s = confirm('加入购物车成功,是否去结算');
+        if(s){
+          //跳转到购物车页面
+          location.href="/homeshopcart";
+        }
+      }
+    });
+
+  }
+</script>
 @endsection

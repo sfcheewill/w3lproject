@@ -45,6 +45,38 @@ class LoginController extends Controller
         session(['upic'=>$user_info->pic]);
     }
 
+    //将session中的购物车存进数据库
+    public function savecart($request){
+        //检测是否有数据
+        $cart = session('cart');
+        $uid = session('uid');
+        //检测相同商品
+        $dbcart = DB::table('shopcart')->where('uid','=',$uid)->get();
+        //检测seesion购物车是否为空
+        if(!empty($cart)){
+            foreach ($cart as $key=>$row) {
+                $flag = true;
+                foreach ($dbcart as $k => $rows) {
+                    if($row['gid'] == $rows->gid){
+                        //相同商品
+                        //数量相加
+                        $data['quantity'] = $row['quantity'] + $rows->quantity;
+                        //更新数据
+                        DB::table('shopcart')->where('id','=',$rows->id)->update($data);
+                        $flag = false;
+                    }
+                }
+                if($flag){
+                    //没有找到相同商品
+                    $row['uid'] = session('uid');
+                    DB::table('shopcart')->insert($row);
+                }
+            }
+            //清空session的购物车
+            $request->session()->pull('cart');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,6 +87,8 @@ class LoginController extends Controller
         //退出登录
         //删除session
         $request->session()->pull('username');
+        $request->session()->pull('uid');
+        $request->session()->pull('upic');
         return redirect('/homeindex');
     }
 
@@ -93,6 +127,8 @@ class LoginController extends Controller
                         //登录成功
                         //将信息存进session
                         self::saveinfo('username',$info);
+                        //将session中的购物车存进数据库
+                        self::savecart($request);
                         //跳转到首页
                         return redirect('/homeindex');
                     }else {
@@ -120,6 +156,8 @@ class LoginController extends Controller
                         //登录成功
                         //将信息存进session
                         self::saveinfo('username',$info);
+                        //将session中的购物车存进数据库
+                        self::savecart($request);
                         //跳转到首页
                         return redirect('/homeindex');
                     }else {

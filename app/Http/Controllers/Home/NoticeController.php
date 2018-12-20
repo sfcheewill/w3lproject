@@ -18,8 +18,16 @@ class NoticeController extends Controller
         //获取关键词
         $keyword = $request->input('keyword');
         $data = DB::table('notice')->where('title','like','%'.$keyword.'%')->orderBy('id','asc')->paginate(10);
+
+        //个人信息
+        $uid = session('uid');
+        $users_info = DB::table('users_info')->where('uid','=',$uid)->first();
+
+        //查询出友情链接的数据
+        $link = DB::select('select * from link order By id asc limit 0,5');
+
         //加载公告列表模板
-        return view('Home.Notice.index',['data'=>$data,'request'=>$request->all()]);
+        return view('Home.Notice.index',['data'=>$data,'request'=>$request->all(),'users_info'=>$users_info,'link'=>$link]);
     }
 
     /**

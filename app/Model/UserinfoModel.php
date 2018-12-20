@@ -13,4 +13,10 @@ class UserinfoModel extends Model
     //设置可以赋值的字段
     protected $fillable = ['uid','nickname','sex','district','birthday','pic'];
 
+   //修改器
+    public function getSexAttribute($value){
+    	$sex = [0=>'女',1=>'男',2=>'保密',''=>'未设置'];
+    	return $sex[$value];
+    }
+
 }

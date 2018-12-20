@@ -51,12 +51,59 @@ Route::get('/checkemailcode','Home\LoginController@checkemailcode');
 Route::post('/newPass','Home\LoginController@newPass');
 //设置新密码
 Route::post('/setNewPass','Home\LoginController@setNewPass');
+//前台友情链接页面
+Route::resource('/homelink','Home\LinkController');
+//检测友情链接网站名
+Route::get('/linkname','Home\LinkController@linkname');
+//检测友情链接网址
+Route::get('/linkurl','Home\LinkController@linkurl');
+//检测友情链接邮箱
+Route::get('/linkemail','Home\LinkController@linkemail');
 //商品列表
 Route::get('/homegoodslist/{id}','Home\IndexController@goodslists');
 //商品详情
 Route::get('/homegoodsinfo/{id}','Home\IndexController@goodsinfo');
-//更换商品颜色
+//商品详情选择商品颜色
 Route::get('/goodscolor','Home\IndexController@goodscolor');
+//商品详情选择商品版本
+Route::get('/specinfo','Home\IndexController@specinfo');
+//商品详情增加商品数量
+Route::get('/goodsadd','Home\IndexController@goodsadd');
+//加入购物车
+Route::get('/addshopcart','Home\CartController@addshopcart');
+//购物车页面
+Route::resource('/homeshopcart','Home\CartController');
+//购物车页面输入值修改商品数量
+Route::get('/shopcartedit','Home\CartController@shopcartedit');
+//增加购物车商品数量
+Route::get('/cartplus','Home\CartController@cartplus');
+//减少购物车商品数量
+Route::get('/cartminus','Home\CartController@cartminus');
+//删除购物车商品
+Route::get('/cartdel','Home\CartController@cartdel');
+
+//前台需要登录的模块组
+Route::group(['middleware'=>'homelogin'],function(){
+	// 个人中心
+	Route::resource('/person','Home\PersonController');
+	// ajax修改性别
+	Route::get('/ajaxsex','Home\PersonController@sex');
+	// ajax修改昵称
+	Route::get('/nickname','Home\PersonController@nickname');
+	// ajax地址显示
+	Route::get('/address','Home\PersonController@address');
+	// ajax地址保存
+	Route::get('/addreset','Home\PersonController@addreset');
+	// ajax修改生日
+	Route::get('/birthday','Home\PersonController@birthday');
+ 	//购物车结算
+	Route::get('/settleaccount/{gids}','Home\CartController@settleAccount');
+	//前台会员地址添加
+	Route::resource('/usercity','Home\UsercityController');
+	//获取地址列表
+	Route::get('/district','Home\UsercityController@district');
+});
+
 
 //后台登录
 Route::resource('/adminlogin','Admin\AdminloginController');
@@ -105,4 +152,14 @@ Route::group(['middleware'=>'adminlogin'],function(){
 	Route::resource('/adminspecinfo','Admin\GoodsspecinfoController');
 	//会员管理
 	Route::resource('/adminusers','Admin\UsersController');
+	//会员地址管理
+	Route::get('/Usercity/{id}','Admin\UsersController@Usercity');
+	//友情链接管理
+	Route::resource('/adminlink','Admin\LinkController');
+	//Ajax修改状态
+	Route::get('/links','Admin\LinkController@links');
+	//轮播图管理
+	Route::resource('/adminslideshow','Admin\SlideshowController');
+	//广告图片管理
+	Route::resource('/advertising','Admin\AdvertisingController');
 });
