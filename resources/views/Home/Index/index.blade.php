@@ -658,7 +658,7 @@ $("#category-block .category-panels.relative").find("a").each(function(){$(this)
         @if(session('username'))
          <div id="gg_login" class="i-mall-prompt clearfix"> 
           <div class="relative fl w-name"> 
-           <a href="#" rel="nofollow" timetype="timestamp"> <img id="gg_customerPic" src="{{$users_info->pic}}" alt="" /> </a> 
+           <a href="/person" rel="nofollow" timetype="timestamp"> <img id="gg_customerPic" src="{{$users_info->pic}}" alt="" /> </a> 
           </div> 
           <div class="fl"> 
            <div class="w-info">
