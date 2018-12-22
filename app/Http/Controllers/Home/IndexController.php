@@ -145,8 +145,10 @@ class IndexController extends Controller
             //个人信息
             $uid = session('uid');
             $users_info = DB::table('users_info')->where('uid','=',$uid)->first();
+            //查询出友情链接的数据
+            $link = DB::select('select * from link order By id asc limit 0,5');
 
-            return view('Home.Index.goodslist',['data'=>$data,'info'=>$info,'cate'=>$cate,'users_info'=>$users_info]);        
+            return view('Home.Index.goodslist',['data'=>$data,'info'=>$info,'cate'=>$cate,'users_info'=>$users_info,'link'=>$link]);        
         }else {
             //子集分类 
             $info->pids = $info->pid;
@@ -189,8 +191,12 @@ class IndexController extends Controller
         //查询出友情链接的数据
         $link = DB::select('select * from link order By id asc limit 0,5');
 
+        //查询出用户是否收藏了该商品
+        $collec = DB::table('user_shopcollect')->where('uid','=',$uid)->where('sid','=',$id)->get();
+
+
         //加载模板
-        return view('Home.Index.goodsinfo',['crumbs'=>$crumbs,'goods'=>$goods,'info'=>$info,'spec'=>$spec,'users_info'=>$users_info,'link'=>$link]);
+        return view('Home.Index.goodsinfo',['crumbs'=>$crumbs,'goods'=>$goods,'info'=>$info,'spec'=>$spec,'users_info'=>$users_info,'link'=>$link,'useid'=>$uid,'shoid'=>$id,'collec'=>$collec]);
     }
 
     //选择商品颜色
@@ -227,4 +233,29 @@ class IndexController extends Controller
             return 'success';
         }
     } 
+
+    //详情页面商品收藏
+    public function GoodCollect(Request $request){
+        //商品id
+        $sid = $request->input('id');
+        $data['sid'] = $sid;
+        //用户id
+        $data['uid'] = session('uid');
+        //状态码 (1添加  0 删除)
+        $stat = $request->input('status');
+
+        //判断
+        if ($stat == 1) {
+            //执行添加
+            if (DB::table('user_shopcollect')->insert($data)) {
+                echo "1";
+            }
+        }else{
+            //执行删除
+            if (DB::table('user_shopcollect')->where('sid','=',$sid)->delete()) {
+                echo "2";
+            }
+        }
+    }
+
 }

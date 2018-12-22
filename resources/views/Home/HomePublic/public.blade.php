@@ -156,7 +156,7 @@ var dapDomain='https://dap.vmall.com';
        <div id="top_login" class="header-toolbar"> 
         <div class="s-dropdown"> 
          <div class="h h-wide" id="up_loginName-hover"> 
-          <a class="icon-dropdown" href="#"><span id="up_loginName">{{session('username')}}</span></a>&nbsp; 
+          <a class="icon-dropdown" href="/person"><span id="up_loginName">{{session('username')}}</span></a>&nbsp; 
          </div> 
          <div class="b"> 
           <!-- 2017-06-19-个人信息-start --> 
@@ -178,14 +178,14 @@ var dapDomain='https://dap.vmall.com';
              <p class="user-img"> <a href="/person" rel="nofollow" timetype="timestamp" target="_blank"> <img id="customerPic" src="{{$users_info->pic}}" alt="默认头像"/> </a> </p> 
             </div> 
             <div class="user-info fl"> 
-             <a href="#" rel="nofollow" target="_blank"> 
+             <a href="/person" rel="nofollow" target="_blank"> 
               <div class="user-info-name" id="up_loginName_info">
                {{session('username')}}
               </div> </a> 
              <div class="user-info-detail clearfix" id="vip-info"> 
               <a id="authentication_y" class="icon-realname hide" style="display: none;">已实名</a> 
               <a id="authentication_n" href="#" rel="nofollow" class="icon-realname disabled hide" style="display: inline;">未实名</a> 
-              <a class="icon-mail" href="#" rel="nofollow" timetype="timestamp">消息中心 <span id="top-newMsgCount" class="hide">0</span></a> 
+              <a class="icon-mail" href="/homestand" rel="nofollow" timetype="timestamp">消息中心 <span id="top-newMsgCount" class="hide">0</span></a> 
              </div> 
             </div> 
            </div> 
@@ -193,7 +193,7 @@ var dapDomain='https://dap.vmall.com';
             <dl class="clearfix"> 
              <dt>
               <span class="fl">我的订单</span>
-              <a class="fr" href="/订单" timetype="timestamp">更多&gt;</a>
+              <a class="fr" href="/homeorder" timetype="timestamp">更多&gt;</a>
              </dt> 
             </dl> 
             <div class="i-mall-uc-con"> 
@@ -233,7 +233,7 @@ var dapDomain='https://dap.vmall.com';
        </div> </li>
        @endif 
       <!-- <li><a href="https://www.vmall.com/member/order?t=1543818343940timestamp" timeType="timestamp" onclick = "pushMyOrderMsg()">我的订单</a></li>--> 
-      <li><a href="/订单" timetype="timestamp">我的订单</a></li> 
+      <li><a href="/homeorder" timetype="timestamp">我的订单</a></li> 
       <li> 
        <div class="s-dropdown s-dropdown-link"> 
         <div class="h"> 

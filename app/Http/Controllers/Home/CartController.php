@@ -326,7 +326,28 @@ class CartController extends Controller
     //购物车结算
     public function settleAccount($gids){
         //获取数据
+        $uid = session('uid');
         $gids = json_decode($gids);
+        $sum = 0;
+        //根据选中的商品id获取数据
+        foreach ($gids as $key => $value) {
+            $orderdata[$key] = DB::table('spec_info')->where('id','=',$value)->first();
+            $orderdata[$key]->quantity = DB::table('shopcart')->where('uid','=',$uid)->where('gid','=',$value)->value('quantity');
+            $orderdata[$key]->gid = DB::table('shopcart')->where('uid','=',$uid)->where('gid','=',$value)->value('gid');
+            $orderdata[$key]->gname = DB::table('goods_spec')->join('goods','goods_spec.gid','=','goods.id')->where('goods_spec.id','=',$orderdata[$key]->spec_id)->value('goods.name');
+            $orderdata[$key]->pic = DB::table('goods_spec')->where('id','=',$orderdata[$key]->spec_id)->value('pic');
+            $orderdata[$key]->pic = explode('@',$orderdata[$key]->pic)[0];
+            $sum += $orderdata[$key]->quantity * $orderdata[$key]->price;
+        }
+        //个人信息
+        $uid = session('uid');
+        $users_info = DB::table('users_info')->where('uid','=',$uid)->first();
+        //获取地址
+        $user_city = DB::table('user_city')->where('uid','=',$uid)->get();
+        //查询出友情链接的数据
+        $link = DB::select('select * from link order By id asc limit 0,5');
+        // dd($data);
+        return view('Home.Shopcart.confirmorder',['users_info'=>$users_info,'link'=>$link,'orderdata'=>$orderdata,'sum'=>$sum,'user_city'=>$user_city]);
     }
 
 }

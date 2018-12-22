@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="chacha" unicode="&#59026;" d="M512 896a512 512 0 1 1 0-1024 512 512 0 0 1 0 1024z m180.974933-647.714133a32.085333 32.085333 0 0 0-45.2608-45.2608L512 338.7392 376.285867 203.093333a32.085333 32.085333 0 0 0-45.2608 45.2608L466.7392 384 331.093333 519.714133a32.085333 32.085333 0 0 0 45.2608 45.2608L512 429.2608 647.714133 564.906667a32.085333 32.085333 0 0 0 45.2608-45.2608L557.2608 384l135.714133-135.714133z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>

@@ -288,7 +288,7 @@
                     </li>
 
                     <li>
-                        <a href="#"><i class="icol32-bell"></i> 轮播图管理</a>
+                        <a href="#"><i class="icol32-photos"></i> 轮播图管理</a>
                         <ul class="closed">
                             <li><a href="/adminslideshow/create">轮播图添加</a></li>
                             <li><a href="/adminslideshow">轮播图列表</a></li>
@@ -296,10 +296,25 @@
                     </li>
 
                     <li>
-                        <a href="#"><i class="icol32-bell"></i> 广告图片管理</a>
+                        <a href="#"><i class="icol32-sound"></i> 广告图片管理</a>
                         <ul class="closed">
                             <li><a href="/advertising/create">广告图添加</a></li>
                             <li><a href="/advertising">广告图列表</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="icol32-layer-edit"></i> 会员订单管理</a>
+                        <ul class="closed">
+                            <li><a href="/adminorder">订单列表</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="icol32-document-quote"></i> 站内信管理</a>
+                        <ul class="closed">
+                            <li><a href="/sendstand/create">站内信模板添加</a></li>
+                            <li><a href="/sendstand">站内信模板列表</a></li>
                         </ul>
                     </li>
                 </ul>

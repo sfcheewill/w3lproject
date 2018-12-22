@@ -61,8 +61,15 @@ class NoticeController extends Controller
     {
         //获取数据
         $data = DB::table('notice')->where('id','=',$id)->first();
+        //个人信息
+        $uid = session('uid');
+        $users_info = DB::table('users_info')->where('uid','=',$uid)->first();
+
+        //查询出友情链接的数据
+        $link = DB::select('select * from link order By id asc limit 0,5');
+
         //记载单条公告模板
-        return view('Home.Notice.show',['data'=>$data]);
+        return view('Home.Notice.show',['data'=>$data,'users_info'=>$users_info,'link'=>$link]);
     }
 
     /**

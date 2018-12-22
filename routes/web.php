@@ -102,6 +102,20 @@ Route::group(['middleware'=>'homelogin'],function(){
 	Route::resource('/usercity','Home\UsercityController');
 	//获取地址列表
 	Route::get('/district','Home\UsercityController@district');
+	//订单处理
+	Route::resource('/homeorder','Home\OrderController');
+	//检测订单
+	Route::get('/checkorder','Home\OrderController@checkorder');
+	//订单支付
+	Route::post('/orderpay','Home\OrderController@orderpay');
+	//订单支付成功
+	Route::get('/paysuccess','Home\OrderController@paysuccess');
+	//详情页面用户收藏商品
+	Route::get('/infocollect','Home\IndexController@GoodCollect');
+	//用户站内信
+	Route::resource('/homestand','Home\HomestandController');
+	// 前台ajax删除站内信
+	Route::get('/delstand','Home\HomestandController@delstand');
 });
 
 
@@ -162,4 +176,10 @@ Route::group(['middleware'=>'adminlogin'],function(){
 	Route::resource('/adminslideshow','Admin\SlideshowController');
 	//广告图片管理
 	Route::resource('/advertising','Admin\AdvertisingController');
+	//会员订单管理
+	Route::resource('/adminorder','Admin\OrderController');
+	// 站内信管理
+	Route::resource('/sendstand','Admin\SendstandController');
+	// ajax发送站内信
+	Route::get('/sendshow','Admin\SendstandController@sendshow');
 });

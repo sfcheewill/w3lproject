@@ -14,10 +14,13 @@ class UsercityController extends Controller
     //加载收货地址模板
     public function index()
     {
+        $uid = session('uid');
+        $users_info = DB::table('users_info')->where('uid','=',$uid)->first();
         $link = DB::select('select * from link order By id asc limit 0,5');
         //加载模板
-        return view('Home.City.index',['link'=>$link]);
+        return view('Home.City.index',['link'=>$link,'users_info'=>$users_info]);
     }
+
     //获取地址
     public function district(Request $request){
         $upid = $request->input('upid');

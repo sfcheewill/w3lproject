@@ -64,6 +64,8 @@ class SlideshowController extends Controller
             }else{
                 return redirect('/adminslideshow/create')->with('error','添加失败');
             }
+        }else{
+            return redirect('/adminslideshow/create')->with('error','上传图片为空');
         }
     }
 

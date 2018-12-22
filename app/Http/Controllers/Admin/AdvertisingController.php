@@ -40,6 +40,12 @@ class AdvertisingController extends Controller
         $data = $request->except(['_token']);
         //规定上传的图片(jpeg、png、bmp、gif、或 svg)
         $suffix = array('jpeg','png','bmp','svg','jpg');
+        //判断是否有空值
+        foreach ($data as $key => $value) {
+            if($value ==''){
+                return redirect('/advertising/create')->with('error','值不能为空 ');
+            }
+        }
         //获取上传的文件
         $file = $request->file('pic');
         //判断是否有上传图片
@@ -68,6 +74,8 @@ class AdvertisingController extends Controller
                 //添加失败删除图片
                 unlink(".".$data['pic']);
             }
+        }else{
+             return redirect('/advertising/create')->with('error','上传图片的格式为空');
         }
     }
 

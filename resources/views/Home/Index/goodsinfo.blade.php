@@ -1179,6 +1179,11 @@ $(function() {
           <div id="pro-operation" class="product-button clearfix" style="visibility: visible;">
            <a href="javascript:;" onclick="addCart()" class="product-button01"><span>加入购物车</span></a>
            <a href="javascript:;" onclick="ec.product.orderNow()" class="product-button02"><span>立即下单</span></a>
+           @if(empty($collec[0]))
+           <a href="javascript:;" class="product-button02 " style="background:#de4c4c;" ><span id="colls" infos="1">收藏</span></a>
+           @else
+           <a href="javascript:;" class="product-button02 " style="background:#de4c4c;" ><span id="colls" infos="2">已收藏</span></a>
+           @endif
           </div> 
           <!-- 20170518-商品简介-按钮-end --> 
           <!-- 20170518-商品简介-协议-start --> 
@@ -1313,7 +1318,27 @@ $(function() {
         $('#pro-price').html('<em>&yen;</em>'+data.price+".00");
       },'json');
     });
-    
+  </script>
+  <!-- 收藏按钮 ==================================================================================================-->
+  <script>
+     //获取商品id
+    sid = {{$shoid}};
+    $('#colls').click(function(){
+      //当前状态码 
+      status = $('#colls').attr("infos");
+      //Ajax
+      $.get('/infocollect',{id:sid,status:status},function(data){
+        if (data == 1) {
+          $('#colls').html('已收藏');
+          $('#colls').attr('infos','2');
+        }else if(data == 2){
+          $('#colls').html('收藏');
+          $('#colls').attr('infos','1');
+        }else{
+          location.href="/homelogin/create";
+        }       
+      });
+    });
   </script>
   <div class="hr-20"></div> 
   <div class="line"></div> 

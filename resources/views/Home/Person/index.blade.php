@@ -437,52 +437,61 @@ $(".mynews-list-area-5 input").each(function(){
     </div> 
     <div class="fl u-1-5"> 
      <!-- 20170823-左边菜单-start --> 
-     <div class="mc-menu-area"> 
-      <div class="h">
-       <a href="https://www.vmall.com/member?t=1543818633252"><span>我的商城</span></a>
-      </div> 
-      <div class="b"> 
-       <ul> 
-        <li> <h3 class="icon-mc-mail"><a href="https://www.vmall.com/member/msg?t=1543818633252"><span id="li-msg">消息中心<em></em></span></a></h3> </li> 
-        <li> <h3 class="icon-mc-help"><a href="https://www.vmall.com/help/index.html" target="_blank"><span>帮助中心</span></a></h3> </li> 
-        <li> <h3 class="icon-mc-order"><span>订单中心</span></h3> 
-         <ol> 
-          <li id="li-order"><a href="https://www.vmall.com/member/order?t=1543818633252"><span>我的订单<em class="">(0)</em></span></a></li> 
-          <li id="li-order-small" style="display: none;"></li> 
-          <li id="li-exchange"><a href="https://www.vmall.com/member/exchange?t=1543818633252"><span>我的退换货</span></a></li> 
-          <li id="li-refunds"><a href="https://www.vmall.com/member/refunds?t=1543818633252"><span>我的退款</span></a></li> 
-          <li id="li-recover"><a href="https://www.vmall.com/member/recycle/index/aihuishou?t=1543818633252"><span>我的回收单</span></a></li> 
-          <li id="li-prdRemark"><a href="https://www.vmall.com/member/prdRemarkView?t=1543818633252"><span>商品评价</span></a></li> 
-         </ol> </li> 
-        <li> <h3 class="icon-mc-asset"><span>我的资产</span></h3> 
-         <ol> 
-          <li id="li-newpoint"><a href="https://www.vmall.com/member/newpoint?t=1543818633252"><span>我的积分</span></a></li> 
-          <li id="li-coupon"><a href="https://www.vmall.com/member/coupon?t=1543818633252"><span>我的优惠券</span></a></li> 
-          <li id="li-balance"><a href="https://www.vmall.com/member/balance?t=1543818633252"><span>我的代金券</span></a></li> 
-          <li id="li-petal"><a href="https://www.vmall.com/member/petal?t=1543818633252"><span>我的花瓣</span></a></li> 
-          <li id="li-point"><a href="https://www.vmall.com/member/point?t=1543818633252"><span>等级与特权</span></a></li> 
-         </ol> </li> 
-        <li> <h3 class="icon-mc-support"><span>购买支持</span></h3> 
-         <ol> 
-          <li id="li-myAddress"><a href="https://www.vmall.com/member/myAddress?t=1543818633252"><span>收货地址管理</span></a></li> 
-          <li id="li-authentication"><a href="https://www.vmall.com/authmember/accesstoken?t=1543818633252"><span>实名认证</span></a></li> 
-          <li id="li-myAppointment"><a href="https://www.vmall.com/member/myAppointment?t=1543818633252"><span>我的预约</span></a></li> 
-          <li id="li-notification"><a href="https://www.vmall.com/member/notification?t=1543818633252"><span>到货通知</span></a></li> 
-          <li id="li-myeasybuy"><a href="https://www.vmall.com/member/myeasybuy?t=1543818633252"><span>我的优享购</span></a></li> 
-          <li id="li-enterprise" class="hide"></li>
-          <!-- 优惠内购 --> 
-          <li id="li-o2o" class="hide"><a href="https://www.vmall.com/o2o?t=1543818633252"><span>O2O商城</span></a></li> 
-         </ol> </li> 
-        <li id="li-company" class="hide" style="display: none;"> <h3 class="icon-mc-business"><span>企业购</span></h3> 
-         <ol> 
-          <li id="li-companyUserInfo"></li> 
-          <li id="li-companyOrder"></li> 
-          <li id="li-companyOrderList"></li> 
-          <li id="li-companyQues"></li> 
-         </ol> </li> 
-       </ul> 
-      </div> 
-     </div> 
+     <div class="mc-menu-area">
+  <div class="h"><a href=""><span>我的商城</span></a></div>
+    <div class="b">
+        <ul>
+            <li>
+                <h3 class="icon-mc-mail"><a href="/homestand"><span id="li-msg">消息中心<em></em></span></a></h3>
+            </li>
+            <li>
+                <h3 class="icon-mc-help"><a href="" target="_blank"><span>帮助中心</span></a></h3>
+            </li>
+          <li>
+                <h3 class="icon-mc-order"><span>订单中心</span></h3>
+              <ol>
+                  <li id="li-order"><a href="/homeorder"><span>我的订单</span></a></li>
+                  <li id="li-order-small" style="display: none;"></li>
+                  <li id="li-exchange"><a href=""><span>我的退换货</span></a></li>
+                  <li id="li-refunds"><a href=""><span>我的退款</span></a></li>
+                  <li id="li-recover"><a href=""><span>我的回收单</span></a></li>
+                  <li id="li-prdRemark"><a href=""><span>商品评价</span></a></li>
+                </ol>
+            </li>
+            <li>
+                <h3 class="icon-mc-asset"><span>我的资产</span></h3>
+                <ol>
+                    <li id="li-newpoint"><a href="/userlike"><span>我的收藏</span></a></li>
+                    <li id="li-coupon"><a href=""><span>我的优惠券</span></a></li>
+                    <li id="li-balance"><a href=""><span>我的代金券</span></a></li>
+                    <li id="li-petal"><a href=""><span>我的花瓣</span></a></li>
+                    <li id="li-point"><a href=""><span>等级与特权</span></a></li>
+                </ol>
+            </li>
+            <li>
+                <h3 class="icon-mc-support"><span>购买支持</span></h3>
+              <ol>
+                    <li id="li-myAddress" class="current"><a href="/usercity"><span>收货地址管理</span></a></li>
+                    <li id="li-authentication"><a href=""><span>实名认证</span></a></li>
+                    <li id="li-myAppointment"><a href=""><span>我的预约</span></a></li>
+                    <li id="li-notification"><a href=""><span>到货通知</span></a></li>
+                    <li id="li-myeasybuy"><a href=""><span>我的优享购</span></a></li>
+                    <li id="li-enterprise" class="hide"></li><!-- 优惠内购 -->
+                    <li id="li-o2o" class="hide"><a href=""><span>O2O商城</span></a></li>
+                </ol>
+            </li>
+            <li id="li-company" class="hide" style="display: none;">
+              <h3 class="icon-mc-business"><span>企业购</span></h3>
+              <ol>
+                <li id="li-companyUserInfo"></li>
+                <li id="li-companyOrder"></li>
+                <li id="li-companyOrderList"></li>
+                <li id="li-companyQues"></li>
+              </ol>
+            </li>
+        </ul>
+    </div>
+</div> 
      <!-- 20170823-左边菜单-end --> 
      <script src="/static/homes/person/leftMenu.js"></script> 
     </div> 
