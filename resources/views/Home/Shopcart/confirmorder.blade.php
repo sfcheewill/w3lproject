@@ -12,7 +12,7 @@
     <div class="left"> 
      <!-- 2017-06-19-logo-文字-start --> 
      <div class="logo logo-word"> 
-      <a href="https://www.vmall.com/" title="华为商城"><img src="/static/homes/confirmorder/WTDdguIWgNsNWtK0Q1Z3.png" alt="华为商城" /></a> 
+      <a href="/homeindex" title="华为商城"><img src="/static/homes/confirmorder/WTDdguIWgNsNWtK0Q1Z3.png" alt="华为商城" /></a> 
       <span>确认订单</span> 
      </div> 
      <!-- 2017-06-19-logo-文字-end --> 
@@ -55,7 +55,7 @@
     <div class="order-detail-area order-address" id="order-address-mod"> 
      <div class="h">
        收货地址 
-      <a id="upAddAddressButton" href="javascript:;" onclick="ec.order.myAddress.add()" class="address-add-btn" style="display: none;">新增收货地址</a> 
+      <a id="upAddAddressButton" href="/usercity" onclick="return confirm('是否去添加新地址')" class="address-add-btn" style="display: none;">新增收货地址</a> 
      </div> 
      <div class="order-address-list" id="order-address-list"> 
       <ul class="clearfix">
@@ -71,14 +71,11 @@
          </div>
         </div><input type="hidden" id="needL4Addr" value="false" /><input type="hidden" id="needModify" value="false" /><input type="hidden" name="streetName" value="前进街道" /><input type="hidden" name="myAddress" id="input-myAddress62156008" data-province="3853" data-city="3854" data-district="3856" data-id="62156008" value="62156008" />
         <div class="address-sub">
-         <a class="address-edit" href="javascript:;" onclick="ec.order.myAddress.edit(62156008)">编辑</a>
-         <a class="address-del" href="javascript:;" onclick="ec.order.myAddress.del(this,62156008)">删除</a>
-         <a id="setAddress-{{$c->id}}" class="address-default" href="javascript:;" onclick="setDetault({{$c->id}})">设为默认</a>
         </div></li>
         @endforeach
        <li id="address-empty">
         <div class="address-empty">
-         <a href="javascript:;" class="address-add-btn" onclick="ec.order.myAddress.add()">新增收货地址</a>
+         <a href="/usercity" class="address-add-btn" onclick="return confirm('是否去添加新地址')">新增收货地址</a>
         </div></li>
       </ul> 
      </div> 

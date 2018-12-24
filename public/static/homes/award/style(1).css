@@ -1,0 +1,73 @@
+/*common22*/
+.mod-productList{font-family:'微软雅黑';}
+.mod-productList a:hover{text-decoration:none;}
+.mod-productList p{line-height:1.2;}
+
+/*2个商品*/
+.mod-productList .grid2{overflow:hidden;}
+.mod-productList .grid2 .layout{width:1200px;height:360px;position:relative;margin:0px auto;}
+.mod-productList .grid2 .grid-list{margin-left:-12px;}
+.mod-productList .grid2 .grid-items{float:left;width:594px;height:360px;background:#fff;position:relative;margin-left:12px;margin-bottom:12px;}
+.mod-productList .grid2 .grid-items a{display:inline-block;width:514px;height:260px;text-align:center;padding:50px 20px 50px 40px;}
+.mod-productList .grid2 .title{font-size:24px;color:#000;width:246px;overflow:hidden;line-height:36px;text-align:left;text-overflow:ellipsis;white-space:nowrap;}
+.mod-productList .grid2 .desc{font-size:18px;color:#878787;width:246px;height:27px;line-height:27px;overflow:hidden;text-align:left;text-overflow:ellipsis;white-space:nowrap;}
+.mod-productList .grid2 .sale{margin-top:20px;width:226px;text-align:left;height:30px;word-wrap:normal;}
+.mod-productList .grid2 .sale span{line-height:28px;text-align:center;padding:0px 10px;font-size:20px;max-width:100%;display:inline-block;vertical-align:middle;}
+.mod-productList .grid2 .sale span em{font-style:normal;overflow:hidden;word-break:break-all;text-overflow:ellipsis;-webkit-line-clamp:1;-webkit-box-orient:vertical;display:block;white-space:nowrap;width:100%;}
+.mod-productList .grid2 .price{font-size:30px;margin-top:41px;text-align:left;width:216px; height: 57px;}
+.mod-productList .grid2 .price em{font-style:normal;display:inline-block;}
+.mod-productList .grid2 .price b{font-size:48px;font-weight:400;margin-left: 6px;}
+.mod-productList .grid2 .price span{font-size:18px;margin-left: 5px;}
+.mod-productList .grid2 .operate{width:160px;height:40px;font-size:20px;line-height:40px;float: left;color:#fff;}
+.mod-productList .grid2 .operate span{text-align:center;display:inline-block;}
+.mod-productList .grid2 .operate i{width: 8px;height: 14px;background: url(https://res.vmallres.com/pimages//sale/2018-07/20180730095711590.png);display:inline-block;margin-left: 10px;}
+.mod-productList .grid2 .getcoupon{float:left;width: 100px;height: 40px;margin-left: 6px;}
+.mod-productList .grid2 .pic{position:absolute;top:50px;right:20px;}
+.mod-productList .grid2 .pic img{width:260px;height:260px;float:right;}
+.mod-productList .grid2 .tip{position:absolute;bottom:50px;right:20px;}
+.mod-productList .grid2 .tip img{width:60px;height:60px;}
+
+/*3个商品*/
+.mod-productList .grid3{overflow:hidden;}
+.mod-productList .grid3 .layout{width:1200px;height:400px;position:relative;margin:0px auto;}
+.mod-productList .grid3 .grid-list{margin-left:-12px;}
+.mod-productList .grid3 .grid-items{float:left;width:392px;height:400px;background:#fff;position:relative;margin-left:12px;margin-bottom:12px;}
+.mod-productList .grid3 .grid-items a{display:inline-block;width:286px;height:360px;padding:20px 53px 20px 53px;text-align:center;}
+.mod-productList .grid3 .title{font-size:24px;color:#000;width:286px;overflow:hidden;line-height:36px;text-overflow:ellipsis;white-space:nowrap;}
+.mod-productList .grid3 .desc{font-size:18px;color:#878787;width:286px;overflow:hidden;height:27px;line-height:27px;text-overflow:ellipsis;white-space:nowrap;}
+.mod-productList .grid3 .sale{margin-top:15px;margin-bottom:15px;height:30px;width:100%;word-wrap:normal;}
+.mod-productList .grid3 .sale span{line-height:28px;text-align:center;padding:0px 10px;font-size:20px;max-width:92%;display:inline-block;vertical-align:middle;}
+.mod-productList .grid3 .sale span em{font-style:normal;overflow:hidden;word-break:break-all;text-overflow:ellipsis;-webkit-line-clamp:1;-webkit-box-orient:vertical;display:block;white-space:nowrap;width:100%;}
+.mod-productList .grid3 .contain {width: 286px;height: 40px;margin-top: 18px;}
+.mod-productList .grid3 .operate{width:180px;height:40px;line-height:40px;text-align:center;float: left;color:#fff;}
+.mod-productList .grid3 .operate span{text-align:center;display:inline-block;font-size:18px;}
+.mod-productList .grid3 .operate span b{font-weight:400;font-size:28px;margin-left: 5px;}
+.mod-productList .grid3 .operate i{font-style: normal;}
+.mod-productList .grid3 .operate .arrow {font-style:normal;width: 8px;height: 14px;background: url(https://res.vmallres.com/pimages//sale/2018-07/20180730095711590.png);display:inline-block;margin-left: 5px;vertical-align: top;margin-top: 14px;}
+.mod-productList .grid3 .operate em{float:right;width:40px;border-left:1px solid #fff;text-align:center;font-style:normal;font-family:SimSun;font-size:24px;}
+.mod-productList .grid3 .contain s {float:left;margin-left:6px;width: 100px;height: 40px;}
+.mod-productList .grid3 .pic{width:180px;height:180px;}
+.mod-productList .grid3 .tip{position:absolute;bottom:78px;right:106px;}
+.mod-productList .grid3 .tip img{width:60px;height:60px;}
+
+/*4个商品*/
+.mod-productList .grid4{overflow:hidden;}
+.mod-productList .grid4 .layout{width:1200px;height:400px;position:relative;margin:0px auto;}
+.mod-productList .grid4 .grid-list{margin-left:-12px;}
+.mod-productList .grid4 .grid-items{float:left;width:291px;height:400px;background:#fff;position:relative;margin-left:12px;margin-bottom:12px;}
+.mod-productList .grid4 .grid-items a{display:inline-block;width:251px;height:360px;padding:20px 20px;text-align:center;}
+.mod-productList .grid4 .title{font-size:24px;color:#000;width:251px;overflow:hidden;line-height:36px;text-overflow:ellipsis;white-space:nowrap;}
+.mod-productList .grid4 .desc{font-size:18px;color:#888;width:251px;overflow:hidden;height:27px;line-height:27px;text-overflow:ellipsis;white-space:nowrap;}
+.mod-productList .grid4 .sale{margin-top:15px;margin-bottom:15px;height:30px;width:100%;word-wrap:normal;}
+.mod-productList .grid4 .sale span{line-height:28px;text-align:center;padding:0px 10px;font-size:20px;max-width:92%;display:inline-block;vertical-align:middle;}
+.mod-productList .grid4 .sale span em{font-style:normal;overflow:hidden;word-break:break-all;text-overflow:ellipsis;-webkit-line-clamp:1;-webkit-box-orient:vertical;display:block;white-space:nowrap;width:100%;}
+.mod-productList .grid4 .contain{width: 271px;height: 40px;left:10px;bottom: 20px;position: absolute;}
+.mod-productList .grid4 .contain .getcoupon {float:left;margin-left:6px;width: 100px;height: 40px;}
+.mod-productList .grid4 .operate{width:165px;height:40px;font-size:18px;line-height:40px;text-align:center;float: left;color:#fff;}
+.mod-productList .grid4 .operate span{text-align:center;display:inline-block;font-size: 18px;}
+.mod-productList .grid4 .operate span b{font-weight:400;font-size: 28px;}
+.mod-productList .grid4 .operate span i{font-style:normal;}
+.mod-productList .grid4 .operate .arrow {width: 8px;height: 14px;background: url(https://res.vmallres.com/pimages//sale/2018-07/20180730095711590.png);display:inline-block;margin-left: 5px;vertical-align: top;margin-top: 14px;}
+.mod-productList .grid4 .pic{width:180px;height:180px;}
+.mod-productList .grid4 .tip{position:absolute;bottom:78px;right:56px;}
+.mod-productList .grid4 .tip img{width:60px;height:60px;}

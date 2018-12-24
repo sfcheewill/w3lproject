@@ -13,12 +13,19 @@ class CartController extends Controller
     public static function setCart($cart){
         $sum = 0;
         foreach ($cart as $key => $value) {
-            $info = DB::table('spec_info')->where('id','=',$value->gid)->first();
-            $pic = DB::table('goods_spec')->where('id','=',$info->spec_id)->value('pic');
-            $pic = explode('@', $pic);
-            $cart[$key]->name = $info->desc;
+            // $info = DB::table('spec_info')->where('id','=',$value->gid)->first();
+            // $pic = DB::table('goods_spec')->where('id','=',$info->spec_id)->value('pic');
+            
+            $info = DB::table('spec_info')->join('goods_spec','spec_info.spec_id','=','goods_spec.id')
+                                        ->join('goods','goods_spec.gid','=','goods.id')
+                                        ->where('spec_info.id','=',$value->gid)
+                                        ->select(DB::raw('spec_info.*,goods_spec.pic,goods.id as goodsid,concat(goods.name,spec_info.desc) as gname'))
+                                        ->first();
+            $pic = explode('@', $info->pic);
+            $cart[$key]->name = $info->gname;
             $cart[$key]->price = $info->price;
             $cart[$key]->pic = $pic[0];
+            $cart[$key]->goodsid = $info->goodsid;
             $sum += $cart[$key]->price * $cart[$key]->quantity;
         }
         return $sum;
@@ -64,6 +71,7 @@ class CartController extends Controller
             //设置数据
             $sum = self::setCart($cart);
         }
+        // dd($cart);
 
         //个人信息
         $uid = session('uid');
@@ -162,17 +170,12 @@ class CartController extends Controller
     public static function checkgoodsBydb($gid,$uid,$quantity){
         $flag = false;
         //获取数据库数据
-        $cart = DB::table('shopcart')->where('gid','=',$gid)->where('uid','=',$uid)->get();
+        $cart = DB::table('shopcart')->where('gid','=',$gid)->where('uid','=',$uid)->first();
         //检测是否为空
-        if(count($cart) != 0){
-            foreach ($cart as $key => $value) {
-                if($value->gid == $gid){
-                    $data['quantity'] = $value['quantity'] + $quantity;
-                    //修改数据
-                    DB::table('shopcart')->where('id','=',$value->id)->update($data);
-                    $flag = true;
-                }
-            }
+        if(!empty($cart)){
+            $data['quantity'] = $cart->quantity + $quantity;
+            DB::table('shopcart')->where('uid','=',$uid)->where('gid','=',$gid)->update($data);
+            $flag = true;
         }
         return $flag;
     } 
@@ -199,12 +202,12 @@ class CartController extends Controller
         }else{
             //已登录
             $uid = session('uid');
-            //检测是否有相同商品
-            if(!self::checkgoodsBydb($uid,$gid,$quantity)){
-                $cart['gid'] = $gid;
-                $cart['quantity'] = $quantity;
-                $cart['uid'] = $uid;
-                DB::table('shopcart')->insert($cart);
+            // 检测是否有相同商品
+            if(!self::checkgoodsBydb($gid,$uid,$quantity)){
+                $data['gid'] = $gid;
+                $data['quantity'] = $quantity;
+                $data['uid'] = $uid;
+                DB::table('shopcart')->insert($data);
             }
             return 'success';
         }
@@ -292,24 +295,39 @@ class CartController extends Controller
             //登录
             //操作数据库
             $uid = session('uid');
-            if(DB::table('shopcart')->where('gid','=',$gid)->where('uid','=',$uid)->delete()){
-                //检测购物车是否为空
-                $data = DB::table('shopcart')->where('uid','=',$uid)->get();
-                if(count($cart) == 0){
-                    //购物车为空
-                    //跳转到空购物车页
-                    return 'empty';
-                }
-                return 'success';
+            //检测是否为批量删除
+            if(is_array($gid)){
+                DB::table('shopcart')->where('uid','=',$uid)->whereIn('gid',$gid)->delete();
+            }else{ 
+                DB::table('shopcart')->where('gid','=',$gid)->where('uid','=',$uid)->delete();
             }
+            //检测购物车是否为空
+            $cart = DB::table('shopcart')->where('uid','=',$uid)->get();
+            if(count($cart) == 0){
+                //购物车为空
+                //跳转到空购物车页
+                return 'empty';
+            }
+            return 'success';
         }else {
             //未登录
             //操作session
             $cart = session('cart');
-            foreach ($cart as $key => $value) {
-                if($gid == $value['gid']){
-                    unset($cart[$key]);
+            //检测是否为批量删除
+            if(is_array($gid)){
+                foreach($cart as $key => $value){
+                    foreach($gid  as $v){
+                        if($value['gid'] == $v){
+                            unset($cart[$key]);
+                        }
+                    }
                 }
+            }else {
+                foreach ($cart as $key => $value) {
+                    if($gid == $value['gid']){
+                        unset($cart[$key]);
+                    }
+                }   
             }
             //将数据重新存回session
             session(['cart'=>$cart]);
@@ -350,4 +368,56 @@ class CartController extends Controller
         return view('Home.Shopcart.confirmorder',['users_info'=>$users_info,'link'=>$link,'orderdata'=>$orderdata,'sum'=>$sum,'user_city'=>$user_city]);
     }
 
+
+    // //迷你购物车
+    // public function getcart(){
+    //     //检测是否登录
+    //     if(session('username')){
+    //         //登录
+    //         $data = DB::table('shopcart')->join('spec_info','shopcart.gid','=','spec_info.id')
+    //                                     ->join('goods_spec','spec_info.spec_id','=','goods_spec.id')
+    //                                     ->join('goods','goods_spec.gid','=','goods.id')
+    //                                     ->select(DB::raw('concat(goods.name,spec_info.desc) as gname,spec_info.price as sprice,goods.logo,shopcart.quantity'))
+    //                                     ->where('uid','=',$uid)
+    //                                     ->get();
+    //         //检测数量 
+    //         $data->sum = count($data);
+    //         if($data->sum == 0){
+    //             return json_encode('empty');
+    //         }else {
+    //             //计算总价
+    //             $prices = 0;
+    //             foreach ($data as $key => $value) {
+    //                  $prices += $value->quantity * $value->sprice;
+    //             }
+    //             // $data->prices = $prices;
+    //         }
+
+    //         return json_encode($data);
+    //     }else {
+    //         //未登录
+    //         $cart = session('cart');
+    //         //检测数量
+    //         if(count($cart) == 0){
+    //             return json_encode('empty');
+    //         }else{
+    //             foreach($cart as $k=>$v){
+    //                 $data[$k] = DB::table('spec_info')->join('goods_spec','spec_info.spec_id','=','goods_spec.id')
+    //                                     ->join('goods','goods_spec.gid','=','goods.id')
+    //                                     ->select(DB::raw('concat(goods.name,spec_info.desc) as gname,spec_info.price as sprice,goods.logo'))
+    //                                     ->where('spec_info.id','=',$v['gid'])
+    //                                     ->first();
+    //                 $data[$k]->quantity = $v['quantity'];
+    //             }
+    //             //计算总价
+    //             $prices = 0;
+    //             foreach ($data as $key => $value) {
+    //                  $prices += $value->quantity * $value->sprice;
+    //             }
+    //             // $data['prices'] = $prices;
+
+    //             return json_encode($data);
+    //         }
+    //     }
+    // }
 }

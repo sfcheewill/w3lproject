@@ -458,11 +458,19 @@ $(".mynews-list-area-5 input").each(function(){
                   <li id="li-prdRemark"><a href=""><span>商品评价</span></a></li>
                 </ol>
             </li>
+            <!-- 新人抽奖开始 -->
+            @if($timeout==1)
+             <li>
+                <h3 class="icon-mc-asset"><span><a href="/homeaward">新人抽奖</a></span></h3>
+              </li>
+            @endif
+            <!-- 新人抽奖结束 -->
+
             <li>
                 <h3 class="icon-mc-asset"><span>我的资产</span></h3>
                 <ol>
                     <li id="li-newpoint"><a href="/userlike"><span>我的收藏</span></a></li>
-                    <li id="li-coupon"><a href=""><span>我的优惠券</span></a></li>
+                    <li id="li-coupon"><a href="/checklottery"><span>我的优惠券</span></a></li>
                     <li id="li-balance"><a href=""><span>我的代金券</span></a></li>
                     <li id="li-petal"><a href=""><span>我的花瓣</span></a></li>
                     <li id="li-point"><a href=""><span>等级与特权</span></a></li>

@@ -123,7 +123,7 @@ var dapDomain='https://dap.vmall.com';
    <div class="layout"> 
     <div class="s-sub"> 
      <ul> 
-      <li><a href="#" onclick="pushHeaderMsg('首页','https://www.vmall.com')">首页</a></li> 
+      <li><a href="/homeindex">首页</a></li> 
       <li><a href="#">华为官网</a></li> 
       <li><a href="#">荣耀官网</a></li> 
       <li><a href="#">花粉俱乐部</a></li> 
@@ -373,7 +373,33 @@ var dapDomain='https://dap.vmall.com';
            <p id="cartInfo">您的购物车是空的，赶紧选购吧~</p> 
           </div> 
           <div class="minicart-pro-list minicart-pro-list-scroll hide" id="minicart-pro-list-block"> 
-           <ul class="minicart-pro-list" id="minicart-goods-list"></ul> 
+           <ul class="minicart-pro-list" id="minicart-goods-list">
+            <!-- 迷你购物车 -->
+             <!-- <li class="minicart-pro-item "> 
+             <div class="pro-info clearfix"> 
+              <div class="p-choose"> 
+               <i class="icon-choose" id="icon-choose-0IQ-S0-1201010004002" onclick="ec.minicart.click(this)" value="348824011" type="S0" data-itemid="0IQ.S0.1201010004002"></i> 
+               <input class="hide" name="skuIds" id="checkbox-0IQ-S0-1201010004002" value="348824011" data-scode="1201010004002" data-itemid="0IQ.S0.1201010004002" type="checkbox" checked="checked" /> 
+              </div> 
+              <input class="hide" id="quantity-348824011" value="1" data-type="S0" type="text" checked="checked" /> 
+              <div class="p-img"> 
+               <a href="/product/241920871.html#348824011" title="" target="_blank" onclick="pushCartProMsg('#348824011','/product/241920871.html#348824011','1')"> <img src="https://res.vmallres.com/pimages//product/6901443143566/78_78_1473405520524mp.jpg" alt="华为平板 M3 4GB+64GB  LTE版（日晖金）" /> </a> 
+              </div> 
+              <div class="p-name"> 
+               <a href="/product/241920871.html#348824011" title="华为平板 M3 4GB+64GB  LTE版（日晖金）" target="_blank" onclick="pushCartProMsg('#348824011','/product/241920871.html#348824011','1')">华为平板 M3 4GB+64GB LTE版（日晖金）</a> 
+              </div> 
+              <div class="p-dec"> 
+               <span class="p-slogan"> </span> 
+              </div> 
+              <div class="p-status"> 
+               <div class="p-price"> 
+                <b>&yen;&nbsp;2688.00</b>
+                <strong><em>x</em><span>1</span></strong> 
+               </div> 
+              </div> 
+             </div> 
+             </li> -->
+           </ul> 
            <div class="minicart-pro-settleup" id="minicart-pro-settleup"> 
             <p> <span>总计：</span> <span><b id="micro-cart-totalPrice">&yen;&nbsp;0</b>
               <s id="micro-cart-totalOriginPrice">
@@ -569,7 +595,7 @@ var dapDomain='https://dap.vmall.com';
   <!-- 2018-10-26-悬浮工具栏-start --> 
   <div class="hungBar j-hungBar"> 
    <div class="hungBar-content"> 
-    <a target="_blank" onclick="pushMyCartMsg()" href="https://www.vmall.com/cart2" timetype="timestamp" class="hungBar-cart" title="购物车"><span style="display:none;"></span><i>购物车</i></a> 
+    <a target="_blank" href="/homeshopcart" timetype="timestamp" class="hungBar-cart" title="购物车"><span style="display:none;"></span><i>购物车</i></a> 
     <a target="_blank" id="tools-nav-service-robotim" onclick="pushRightHelpMsg('在线客服')" href="http://robotim.vmall.com/live800/chatClient/chatbox.jsp?companyID=8922&amp;configID=10&amp;location=B_002&amp;chatfrom=web&amp;channelType=Vmall%e5%95%86%e5%9f%8e%e7%94%b5%e8%84%91%e7%ab%af&amp;enterurl=https%3A%2F%2Fwww.vmall.com%2F&amp;k=1&amp;remark=" class="hungBar-service" title="在线客服" style="display: block;"><i>在线客服</i></a> 
     <a id="tools-nav-survery" onclick="ec.survery.open();pushRightHelpMsg('意见反馈')" href="javascript:;" class="hungBar-feedback" title="意见反馈" style="display: block;"><i>意见反馈</i></a> 
     <a href="javascript:;" class="hungBar-top" title="返回顶部" id="hungBar-top" style="display: none;"><i>返回顶部</i></a> 

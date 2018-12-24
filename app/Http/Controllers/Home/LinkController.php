@@ -17,11 +17,14 @@ class LinkController extends Controller
         //查询出友情链接所有数据
         $data = DB::table('link')->get();
 
+        //个人信息
+        $uid = session('uid');
+        $users_info = DB::table('users_info')->where('uid','=',$uid)->first();
         //查询出友情链接的数据
         $link = DB::select('select * from link order By id asc limit 0,5');
 
         //加载前台模板
-        return view('Home.Link.index',['data'=>$data,'link'=>$link]);
+        return view('Home.Link.index',['data'=>$data,'link'=>$link,'users_info'=>$users_info]);
     }
 
     /**

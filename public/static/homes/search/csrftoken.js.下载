@@ -1,0 +1,25 @@
+var csrftoken = "";
+
+function getToken() {
+	if (typeof String.prototype.endsWith != 'function') {
+        String.prototype.endsWith = function(suffix) {
+            return this.indexOf(suffix, this.length - suffix.length) !== -1;
+        };
+    }
+	
+	var url = document.domain;
+	var wDomain = ".vmall.com;.hicloud.com";
+	var wds = wDomain.split(";");
+	
+	for(var i = 0;i<wds.length; i++) {
+		var wd = wds[i];
+		var isDomain = url.endsWith(wd);
+		
+		if (isDomain) {
+			csrftoken = "a66234b9-9e10-496c-ad1e-d685721f3412";
+			break;
+		}
+	}
+}
+
+getToken();

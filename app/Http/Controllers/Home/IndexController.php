@@ -204,7 +204,7 @@ class IndexController extends Controller
         $cid = $request->input('cid');
         //获取数据
         $data = DB::table('goods_spec')->where('id','=',$cid)->first();
-        $data->info = DB::table('spec_info')->where('spec_id','=',$data->id)->get();
+        $data->info = DB::table('spec_info')->join('goods_spec','spec_info.spec_id','=','goods_spec.id')->join('goods','goods_spec.gid','=','goods.id')->where('spec_id','=',$data->id)->select(DB::raw('spec_info.*,concat(goods.name,spec_info.desc) as gname'))->get();
         $data->pic = explode('@',$data->pic);
         echo json_encode($data);
         // dd($data);
@@ -214,8 +214,8 @@ class IndexController extends Controller
     public function specinfo(Request $request){
         //获取数据
         $vid = $request->input('vid');
-        $data = DB::table('spec_info')->where('id','=',$vid)->first();
-        $data->color = DB::table('goods_spec')->where('id','=',$data->spec_id)->value('color');
+        $data = DB::table('spec_info')->join('goods_spec','spec_info.spec_id','=','goods_spec.id')->join('goods','goods_spec.gid','=','goods.id')->where('spec_info.id','=',$vid)->select(DB::raw('concat(goods.name,spec_info.desc) as gname,goods_spec.color,spec_info.version,spec_info.price'))->first();
+        // $data->color = DB::table('goods_spec')->where('id','=',$data->spec_id)->value('color');
         echo json_encode($data);
         // dd($data);
     }
@@ -256,6 +256,25 @@ class IndexController extends Controller
                 echo "2";
             }
         }
+    }
+
+    //商品搜索
+    public function searchgoods(Request $request){
+        //获取搜索的商品名称
+        $goodsname = $request->input('goodsname');
+        //搜索
+        $goods = DB::table('goods')->where('name','like','%'.$goodsname.'%')->paginate(20);
+
+
+        //个人信息
+        $uid = session('uid');
+        $users_info = DB::table('users_info')->where('uid','=',$uid)->first();
+
+        //查询出友情链接的数据
+        $link = DB::select('select * from link order By id asc limit 0,5');
+
+        //加载模板 分配数据
+        return view('Home.Index.search',['users_info'=>$users_info,'link'=>$link,'goods'=>$goods,'goodsname'=>$goodsname]);
     }
 
 }

@@ -11,7 +11,7 @@
      <div class="layout"> 
       <div class="left"> 
        <div class="logo logo-word"> 
-        <a href="https://www.vmall.com/" title="华为商城"><img src="/static/homes/shopcart/20170703105852645577.png" alt="华为商城" /></a> 
+        <a href="/homeindex" title="华为商城"><img src="/static/homes/shopcart/20170703105852645577.png" alt="华为商城" /></a> 
         <span>我的购物车</span> 
        </div> 
       </div> 

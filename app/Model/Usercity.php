@@ -17,7 +17,7 @@ class Usercity extends Model
 
     //修改器
     public function getStatusAttribute($value){
-    	$status = [1=>'默认地址'];
+    	$status = [1=>'默认地址',2=>''];
     	return $status[$value];
     }
 }

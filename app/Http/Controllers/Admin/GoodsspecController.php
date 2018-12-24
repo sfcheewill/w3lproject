@@ -116,7 +116,7 @@ class GoodsspecController extends Controller
         $img = DB::table('goods_spec')->where('id','=',$id)->value('pic');
         $imgs = explode('@',$img);
         if(DB::table('goods_spec')->where('id','=',$id)->delete()){
-            foreach ($$imgs as $r) {
+            foreach ($imgs as $r) {
                 unlink('.'.$r);
             }
             return redirect('/admingoods/'.$id)->with('success','删除成功');

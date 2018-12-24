@@ -461,17 +461,14 @@
             <!-- 2017-02-15-搜索条-焦点为search-form增加className:hover -start -->
             <div class="search-bar relative" id="searchBar-area">
                 <div class="search-bar-form" id="search-bar-form">
-                   <form method="get" onsubmit="return search(this)">
-                        <input type="text" class="text" maxlength="200" id="search-kw" autocomplete="off">
-                        <input type="submit" class="button" value="搜索">
-                            <input type="hidden" id="channelType" name="channelType" value="0">
-                        <input type="hidden" id="default-search" value="nova 3i|荣耀 Note10">
-                    </form>
+                   <form method="get" action="/searchgoods"> 
+        <input type="text" class="text" name="goodsname" maxlength="200" id="search-kw" autocomplete="off" /> 
+        <input type="submit" class="button" value="搜索" /> 
+       </form>
                 </div>
                 <div class="search-bar-key" id="search-bar-key">
                     <div class="searchBar-key">
-                        <a href="javascript:void(0);" onclick="searchFunc(&#39;荣耀Magic2&#39;); return false;" rel="nofollow">荣耀Magic2</a>
-                        <a href="javascript:void(0);" onclick="searchFunc(&#39;HUAWEI Mate 20&#39;); return false;" rel="nofollow">HUAWEI Mate 20</a>
+                      
                       </div>
                 </div>
                  <div id="search-history" class="search-bar-history hide">

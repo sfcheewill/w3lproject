@@ -81,11 +81,19 @@ Route::get('/cartplus','Home\CartController@cartplus');
 Route::get('/cartminus','Home\CartController@cartminus');
 //删除购物车商品
 Route::get('/cartdel','Home\CartController@cartdel');
+// //迷你购物车
+// Route::get('/getcart','Home\CartController@getcart');
+//搜索商品
+Route::get('/searchgoods','Home\IndexController@searchgoods');
 
 //前台需要登录的模块组
 Route::group(['middleware'=>'homelogin'],function(){
 	// 个人中心
 	Route::resource('/person','Home\PersonController');
+	//我的商品收藏
+	Route::resource('/userlike','Home\MylikeController');
+	//取消商品收藏
+	Route::get('/nolike','Home\MylikeController@Nolike');
 	// ajax修改性别
 	Route::get('/ajaxsex','Home\PersonController@sex');
 	// ajax修改昵称
@@ -106,6 +114,10 @@ Route::group(['middleware'=>'homelogin'],function(){
 	Route::resource('/homeorder','Home\OrderController');
 	//检测订单
 	Route::get('/checkorder','Home\OrderController@checkorder');
+	//订单页的立即支付
+	Route::get('/orderpaynow/{id}/{number}/{name}','Home\OrderController@orderpaynow');
+	//订单取消
+	Route::get('/ordercancel','Home\OrderController@ordercancel');
 	//订单支付
 	Route::post('/orderpay','Home\OrderController@orderpay');
 	//订单支付成功
@@ -116,6 +128,20 @@ Route::group(['middleware'=>'homelogin'],function(){
 	Route::resource('/homestand','Home\HomestandController');
 	// 前台ajax删除站内信
 	Route::get('/delstand','Home\HomestandController@delstand');
+	//查看不同订单
+	Route::get('/ordercheck','Home\OrderController@ordercheck');
+	//确认收货
+	Route::get('orderstatus','Home\OrderController@orderstatus');
+	// 前台抽奖
+	Route::resource('/homeaward','Home\HomawardController');
+	// 前台ajax优惠券获取
+	Route::get('/lottery','Home\HomawardController@lottery');
+	// 前台查看优惠券
+	Route::get('/checklottery','Home\HomawardController@checklottery');
+	//处理添加地址数据 Ajax
+	Route::get('/docity','Home\UsercityController@docity');
+	//Ajax删除地址
+	Route::get('/citydel','Home\UsercityController@citydel');
 });
 
 
@@ -178,8 +204,16 @@ Route::group(['middleware'=>'adminlogin'],function(){
 	Route::resource('/advertising','Admin\AdvertisingController');
 	//会员订单管理
 	Route::resource('/adminorder','Admin\OrderController');
+	//订单发货
+	Route::get('/ordersend','Admin\OrderController@ordersend');
 	// 站内信管理
 	Route::resource('/sendstand','Admin\SendstandController');
 	// ajax发送站内信
 	Route::get('/sendshow','Admin\SendstandController@sendshow');
+	//查看会员对应订单
+	Route::get('/usersorder/{id}','Admin\OrderController@usersorder');
+	// 抽奖模块管理
+	Route::resource('/award','Admin\AwardController');
+	// 优惠券模块管理
+	Route::resource('/mylottry','Admin\MylottryController');
 });

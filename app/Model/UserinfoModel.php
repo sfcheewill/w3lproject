@@ -11,7 +11,7 @@ class UserinfoModel extends Model
     //设置时间戳维护
     public $timestamps = true;
     //设置可以赋值的字段
-    protected $fillable = ['uid','nickname','sex','district','birthday','pic'];
+    protected $fillable = ['uid','nickname','sex','district','birthday','pic','status'];
 
    //修改器
     public function getSexAttribute($value){

@@ -35,7 +35,7 @@
           @endforeach
         </td>
         <td class=" ">
-        <form action="/admingoodsspec/{{$value->id}}" method="post" style="display: inline-block;">
+        <form action="/admingoodsspec/{{$value->gid}}" method="post" style="display: inline-block;">
           {{method_field('DELETE')}}
           {{csrf_field()}}
           <button href="" class="btn btn-danger del">删除</button>

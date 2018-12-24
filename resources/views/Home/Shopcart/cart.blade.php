@@ -37,7 +37,7 @@
    <div class="hr-20"></div> 
    <div class="sc-list"> 
     <div class="sc-pro-title clearfix"> 
-     <label class="checkbox"><input readonly="readonly" class="vam checked" /> 全选</label> 
+     <label class="checkbox"><input readonly="readonly" class="vam checked choose" /> 全选</label> 
      <ul class="clearfix"> 
       <li>商品</li> 
       <li>单价</li> 
@@ -54,12 +54,12 @@
         <label class="checkbox"><input readonly="readonly" type="checkbo" class="vam checked" /> </label> 
         <div class="sc-pro-area"> 
          <div class="sc-pro-main clearfix"> 
-          <a href="/homegoodsinfo/{{$c->gid}}" target="_blank" class="p-img"><img src="{{$c->pic}}" alt="{{$c->name}}" /></a> 
+          <a href="/homegoodsinfo/{{$c->goodsid}}" target="_blank" class="p-img"><img src="{{$c->pic}}" alt="{{$c->name}}" /></a> 
           <div class="tips-1 p-stock-tips" style="display: none;">
             限购件 
           </div> 
           <ul title="{{$c->gid}}"> 
-           <li><a href="/homegoodsinfo/{{$c->gid}}" target="_blank" title="{{$c->name}}" class="p-name"> 
+           <li><a href="/homegoodsinfo/{{$c->goodsid}}" target="_blank" title="{{$c->name}}" class="p-name"> 
              <!---->{{$c->name}}</a> 
             <!----> 
             <!----></li> 
@@ -100,8 +100,8 @@
    <div class=""> 
     <div class="sc-total-tool layout clearfix "> 
      <div class="sc-total-control"> 
-      <label class="checkbox"><input readonly="readonly" class="vam checked" /> 全选</label> 
-      <a href="javascript:;">删除</a> 
+      <label class="checkbox"><input readonly="readonly" class="vam checked choose" /> 全选</label> 
+      <a href="javascript:;" onclick="del()">删除</a> 
      </div> 
      <div class="sc-total-btn "> 
       <a href="javascript:;">立即结算</a> 
@@ -196,7 +196,7 @@
     $('.p-del').click(function(){
       var s = confirm('确定要删除商品吗?');
       var gid = $(this).parents('ul').attr('title');
-      var div = $(this).parents("div[data-id='"+gid+"']");
+      var div = $("div[data-id='"+gid+"']");
       if(s){
         //Ajax删除商品
         $.get('/cartdel',{gid:gid},function(data){
@@ -217,9 +217,12 @@
       var n = 0;
       //商品总价
       var m = 0;
-      $('ul[title]').each(function(i){
-        n += parseInt($(this).find('.p-stock-text').val());
-        m += parseInt($(this).find('li[class="p-price-total"]').children('span').html());
+      $('div[data-id]').each(function(){
+        var o = $(this);
+        if($(this).find('.checkbox').children('input').hasClass('checked')){
+             n += parseInt($(this).find('.p-stock-text').val());
+             m += parseInt($(this).find('li[class="p-price-total"]').children('span').html());   
+        }
       });
       //修改
       $('.sc-total-price').find('span:first').html('&yen;&nbsp; '+m+'.00');
@@ -228,13 +231,76 @@
 
     totalprice();
 
-    //全选/全不选
-    // function choose(){
+    //选中按钮
+    $('.sc-pro').find('.checkbox').children('input').each(function(){
+      $(this).toggle(function(){
+        $(this).removeClass('checked');
+        checkchoose();
+        totalprice();
+      },function(){
+        $(this).addClass('checked');
+        checkchoose();
+        totalprice();
+      });
+    });
 
-    // }
-    // $('.sc-total-control input').click(choose);
-    // $('.sc-pro-title input').click(choose);
+    //全选按钮
+    $('.choose').toggle(function(){
+      $('.checkbox').children('input').each(function(){
+        $(this).removeClass('checked');
+        totalprice();
+      });
+    },function(){
+      $('.checkbox').children('input').each(function(){
+        $(this).addClass('checked');
+        totalprice();
+      });
+    });
 
+    //检测是否都选中
+    function checkchoose(){
+      var choose = $('.sc-pro').find('.checkbox').children('input:.checked').length;
+      var len = $('.sc-pro').find('.checkbox').children('input').length;
+      if(choose == len){
+        $('.choose').addClass('checked');
+      }else {
+        $('.choose').removeClass('checked');
+      }
+    }
+
+    //批量删除商品
+    function del(){
+      //获取选中的值
+      var gids = [];
+      //获取所有选中的商品id
+      $('div[data-id]').each(function(){
+        var obj = $(this);
+        if($(this).find('label').children('input').hasClass('checked')){
+          gids.push($(obj).attr('data-id'));
+        }
+      });
+      //检测是否为空
+      if(gids.length == 0){
+        alert('未选中商品');
+        return ;
+      }
+      var s = confirm('确定要删除商品吗');
+      if(s){
+        //Ajax删除
+        $.get('/cartdel',{gid:gids},function(data){
+          if(data == 'success'){
+            for(var i = 0; i < gids.length; i++){
+              var div = $("div[data-id='"+gids[i]+"']");
+              div.remove();
+            }
+            totalprice();
+          }else if(data == 'empty'){
+            location.href="/homeshopcart";
+          }
+        })
+      }
+    }
+    
     //结算
   $('.sc-total-btn a').click(function(){
     //存储商品id
@@ -244,8 +310,7 @@
       var obj = $(this);
       if($(this).find('label').children('input').hasClass('checked')){
         gids.push($(obj).attr('data-id'));
-        $(this).find
-      }
+      }   
     });
     //检测是否为空
     if(gids.length == 0){

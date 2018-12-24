@@ -528,11 +528,9 @@
      <!-- 2017-02-15-搜索条-焦点为search-form增加className:hover -start --> 
      <div class="search-bar relative" id="searchBar-area"> 
       <div class="search-bar-form" id="search-bar-form"> 
-       <form method="get" onsubmit="return search(this)"> 
-        <input type="text" class="text" maxlength="200" id="search-kw" autocomplete="off" /> 
+       <form method="get" action="/searchgoods"> 
+        <input type="text" class="text" name="goodsname" maxlength="200" id="search-kw" autocomplete="off" /> 
         <input type="submit" class="button" value="搜索" /> 
-        <input type="hidden" id="channelType" name="channelType" value="0" /> 
-        <input type="hidden" id="default-search" value="nova 3i|荣耀 Note10" /> 
        </form> 
       </div> 
       <div class="search-bar-key" id="search-bar-key"> 
@@ -788,7 +786,7 @@ $("body").addClass("wide detail");
     @endforeach
     <!-- <a href="https://www.vmall.com/list-40" title="笔记本 &amp; 平板">笔记本 &amp; 平板</a>&nbsp;&gt;&nbsp; -->
     <!-- <a href="https://www.vmall.com/list-41" title="平板电脑">平板电脑</a>&nbsp;&gt;&nbsp;  -->
-    <span id="bread-pro-name">{{$info[0]->desc}}</span>
+    <span id="bread-pro-name">{{$goods->name}} {{$info[0]->desc}}</span>
    </div> 
   </div> 
   <div class="hr-10"></div> 
@@ -853,7 +851,7 @@ $("body").addClass("wide detail");
      <div id="product-property-recommand"> 
       <!-- 20170518-商品简介-商品信息-start --> 
       <div class="product-meta"> 
-       <h1 id="pro-name">{{$info[0]->desc}}</h1> 
+       <h1 id="pro-name">{{$goods->name}} {{$info[0]->desc}}</h1> 
        <input class="hide" value="348824011" id="product_sku" /> 
        <input class="hide" value="241920871" id="product_productId" /> 
        <div class="product-slogan" id="skuPromWord" style="display: -webkit-box;">
@@ -1178,7 +1176,6 @@ $(function() {
           <!-- 20170518-商品简介-按钮-start --> 
           <div id="pro-operation" class="product-button clearfix" style="visibility: visible;">
            <a href="javascript:;" onclick="addCart()" class="product-button01"><span>加入购物车</span></a>
-           <a href="javascript:;" onclick="ec.product.orderNow()" class="product-button02"><span>立即下单</span></a>
            @if(empty($collec[0]))
            <a href="javascript:;" class="product-button02 " style="background:#de4c4c;" ><span id="colls" infos="1">收藏</span></a>
            @else
@@ -1285,9 +1282,9 @@ $(function() {
           $('#version').append(li);
         }
         //修改面包屑
-        $('#bread-pro-name').html(data.info[vindex].desc);
+        $('#bread-pro-name').html(data.info[vindex].gname);
         //修改标题
-        $('#pro-name').html(data.info[vindex].desc);
+        $('#pro-name').html(data.info[vindex].gname);
         //修改已选择商品
         $('#pro-select-sku').html(data.color + " /" + data.info[vindex].version + " /" + "官方标配");
       },'json');
@@ -1309,9 +1306,9 @@ $(function() {
       //ajax
       $.get('/specinfo',{vid:vid},function(data){
         //修改面包屑
-        $('#bread-pro-name').html(data.desc);
+        $('#bread-pro-name').html(data.gname);
         //修改标题
-        $('#pro-name').html(data.desc);
+        $('#pro-name').html(data.gname);
         //修改已选择商品
         $('#pro-select-sku').html(data.color + " /" + data.version + " /" + "官方标配");
         //修改价格

@@ -28,7 +28,7 @@
 <div class="myAddress-edit" id="myAddress-edit">
     <div class="form-edit-panels" id="form-edit-panels">
     <!-- 发送数据表单 -->
-      <form id="myAddress-form" action="/usercity" autocomplete="off" method="post" data-type="add">            
+      <form id="myAddress-form" action="javascript:void(0)" autocomplete="off" method="post" data-type="add">            
             <div class="form-edit-table">
                 <table border="0" cellpadding="0" cellspacing="0">
                   <tbody>
@@ -51,7 +51,7 @@
                 <!--20170627  收货地址 start-->
                     <!--以下内容隐藏时添加class="hide"，显示去掉class="hide"-->
 <div class="form-address">
-    <div id="current-address" class="form-address-detail open" >
+    <div id="current-address" class="form-address-detail open" value="0">
       选择省-市-区-街道
       <a href="javascript:void(0)" style="position: relative;left: 440px;top: 1px"><i class="iconfont icon-xiala1"></i></a>
     </div><!--有内容时添加class="form-address-detailcon"-->
@@ -95,7 +95,7 @@
                             <th>&nbsp;</th>
                             <td>
                               <label class="inputbox">
-                                <input type="checkbox" class="checkbox" name="defaultFlag" value="1" id="myAddress-default">
+                                <input type="checkbox" class="checkbox" name="defaultFlag" id="myAddress-default">
                                 <span>设为默认收货地址</span>
                               </label>
                             </td>
@@ -104,9 +104,10 @@
                           <th>&nbsp;</th>
                           <td>
                             <div id="form-edit-button">
-                              <input type="submit" id="button-ok" class="button-action-ok" value="添加新地址">
+                              <input type="submit" id="button" class="button-action-ok" value="添加新地址">
                                 <a href="javascript:;" id="button-cancel" class="button-action-cancel" >清&nbsp;&nbsp;空</a>
                             </div>
+                            <span id="stop"></span>
                           </td>
                         </tr>
                     </tbody>
@@ -117,8 +118,123 @@
 </div>
 <!-- 20141216-我的收货地址-表单-编辑地址-end -->
 <!-- 地址管理 和 表单检测 -->
+<div class="hr-30"></div>
+<!-- 20141216-我的收货地址-列表-start -->
+<!--表单-我的收货地址 -->
+<div class="myAddress-record hide" id="myAddress-record" style="display: block;">
+  <div class="list-group-title">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <th class="col-name">收货人</th>
+          <th class="col-address">收货地址</th>
+          <th class="col-zip">邮编</th>
+          <th class="col-tel">手机/电话</th>
+          <th class="col-operate">操作</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  @if(count($usercity)>0)
+  @foreach($usercity as $value)
+  <div class="list-group" id="list-group" value="{{$value->id}}">
+   <div class="list-group-item" >
+    <table border="0" cellpadding="0" cellspacing="0">
+     <tbody>
+      <tr>
+       <td class="col-name">{{$value->name}}</td>
+       <td class="col-address">{{$value->city}}</td>
+       <td class="col-zip">{{$value->code}}</td>
+       <td class="col-tel"><p>{{$value->phone}}</p></td>
+       <td class="col-operate">
+          <p class="p-del"><a class="del" href="javascript:void(0)" title="删除"><span>删除</span></a></p>
+          <p class="p-state"><span class="default">{{$value->status}}</span></p></td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+  </div>
+  @endforeach
+  @endif
+</div>
+<input type="hidden" id="gouldAddress" name="unionPaySwitch" value="1">
+<!-- <script src="/static/homes/city/csrftoken.js(1).下载"></script> -->
+</div>
+    <div class="fl u-1-5">
+<!-- 20170823-左边菜单-start -->
+ <div class="mc-menu-area">
+  <div class="h"><a href=""><span>我的商城</span></a></div>
+    <div class="b">
+        <ul>
+            <li>
+                <h3 class="icon-mc-mail"><a href="/homestand"><span id="li-msg">消息中心<em></em></span></a></h3>
+            </li>
+            <li>
+                <h3 class="icon-mc-help"><a href="" target="_blank"><span>帮助中心</span></a></h3>
+            </li>
+          <li>
+                <h3 class="icon-mc-order"><span>订单中心</span></h3>
+              <ol>
+                  <li id="li-order"><a href="/homeorder"><span>我的订单</span></a></li>
+                  <li id="li-order-small" style="display: none;"></li>
+                  <li id="li-exchange"><a href=""><span>我的退换货</span></a></li>
+                  <li id="li-refunds"><a href=""><span>我的退款</span></a></li>
+                  <li id="li-recover"><a href=""><span>我的回收单</span></a></li>
+                  <li id="li-prdRemark"><a href=""><span>商品评价</span></a></li>
+                </ol>
+            </li>
+            <!-- 新人抽奖开始 -->
+            @if($timeout==1)
+             <li>
+                <h3 class="icon-mc-asset"><span><a href="/homeaward">新人抽奖</a></span></h3>
+              </li>
+            @endif
+            <!-- 新人抽奖结束 -->
+
+            <li>
+                <h3 class="icon-mc-asset"><span>我的资产</span></h3>
+                <ol>
+                    <li id="li-newpoint"><a href="/userlike"><span>我的收藏</span></a></li>
+                    <li id="li-coupon"><a href="/checklottery"><span>我的优惠券</span></a></li>
+                    <li id="li-balance"><a href=""><span>我的代金券</span></a></li>
+                    <li id="li-petal"><a href=""><span>我的花瓣</span></a></li>
+                    <li id="li-point"><a href=""><span>等级与特权</span></a></li>
+                </ol>
+            </li>
+            <li>
+                <h3 class="icon-mc-support"><span>购买支持</span></h3>
+              <ol>
+                    <li id="li-myAddress" class="current"><a href="/usercity"><span>收货地址管理</span></a></li>
+                    <li id="li-authentication"><a href=""><span>实名认证</span></a></li>
+                    <li id="li-myAppointment"><a href=""><span>我的预约</span></a></li>
+                    <li id="li-notification"><a href=""><span>到货通知</span></a></li>
+                    <li id="li-myeasybuy"><a href=""><span>我的优享购</span></a></li>
+                    <li id="li-enterprise" class="hide"></li><!-- 优惠内购 -->
+                    <li id="li-o2o" class="hide"><a href=""><span>O2O商城</span></a></li>
+                </ol>
+            </li>
+            <li id="li-company" class="hide" style="display: none;">
+              <h3 class="icon-mc-business"><span>企业购</span></h3>
+              <ol>
+                <li id="li-companyUserInfo"></li>
+                <li id="li-companyOrder"></li>
+                <li id="li-companyOrderList"></li>
+                <li id="li-companyQues"></li>
+              </ol>
+            </li>
+        </ul>
+    </div>
+</div> 
+<!-- 20170823-左边菜单-end -->
+      </div>
+  </div>
+</div>
 <script type="text/javascript">
-  flage = false;
+  flname = false;
+  flphone = false;
+  flcity = false;
+  flcitys = false;
+  flcode = true;
   //获取收货人 绑定失去焦点事件
   $("input[name='name']").blur(function(){
     //获取收货人
@@ -127,31 +243,31 @@
     if (n == '') {
       //错误
       $('#nspan').css('color','red').html('*收货人不能为空');
-      flage = false;
+      flname = false;
     }else if(n.match(/^[\d\w\u4e00-\u9fa5,]{2,15}$/)==null){
       $('#nspan').css('color','red').html('*收货人长度为2-15个字符,且不能使用特殊字符');
-      flage = false;
+      flname = false;
     }else{
-      $('#nspan').css('color','green').html('*收货人名可用');
-      flage = true;
+      $('#nspan').removeAttr('style');
+      flname = true;
     }
   });
 
   //获取手机号 绑定失去焦点事件
   $("input[name='phone']").blur(function(){
-    //获取收货人
+    //获取手机号
     p = $(this).val();
     //正则判断
     if (p == '') {
       //错误
       $('#pspan').css('color','red').html('*手机号码不能为空');
-      flage = false;
+      flphone = false;
     }else if(p.match(/^1[34578]\d{9}$/)==null){
       $('#pspan').css('color','red').html('*手机号码格式错误');
-      flage = false;
+      flphone = false;
     }else{
-      $('#pspan').css('color','green').html('*手机号码可用');
-      flage = true;
+      $('#pspan').removeAttr('style').html('');
+      flphone = true;
     }
   });
 
@@ -160,39 +276,118 @@
     //详细地址
     t = $(this).val();
     //获取地址下拉框
-    c = $('.open').html();
+    c = $('.open').attr('value');
+    // alert(c);
     //判断有没有选择地址
-    if (c != '选择省-市-区-街道') {
+    if (c == 0) {
       $('#cspan').css('color','red').html('*请选择完整的信息地区');
-      flage = false;
+      flcity = false;
     }else{
       $('#cspan').removeAttr('class').html('');
-      flage = true;
+      flcity = true;
     }
     //判断有没有填写详细的信息
     if (t == '') {
       $('#tspan').css('color','red').html('*请填写详细地址');
-      flage = false;
-    }else if (t.match(/^[\d\w\u4e00-\u9fa5,]{4,50}$/)==null) {
-      $('#tspan').css('color','red').html('*详细地址为4-50字段');
-      flage = false;
+      flcitys = false;
+    }else if (t.match(/^[\d\w\u4e00-\u9fa5,]{3,50}$/)==null) {
+      $('#tspan').css('color','red').html('*详细地址为3-40字段');
+      flcitys = false;
     }else{
       $('#tspan').removeAttr('style').html('');
-      flage = true;
+      flcitys = true;
     }
   });
-  
   //获取邮编 绑定失去焦点事件
   $("#code").blur(function(){
     var y = $(this).val();
     if(y != ''){
       if (y.match(/^[0-9]{6}$/)==null) {
-        $('#yspan').css('color','red').html('邮编为6位数字,请注意格式');
+        $('#yspan').css('color','red').html('邮编为6位数字,请注意格式(可不填)');
+        flcode = false;
       }
     }else{
-      $('#yspan').removeAttr('class').html('').prev('#code').attr('placeholder','邮编可不填');
+      $('#yspan').removeAttr('class');
+      flcode = true;
     }
-  })
+  });
+  //获取清空按钮  重置所有数据
+  $('#button-cancel').click(function(){
+      //清空表单的内容
+      $('#nspan').html('').prev().removeAttr('value');
+      $('#pspan').html('').prev().removeAttr('value');
+      $('#citygg').removeAttr('value');
+      $('.open').html('选择省-市-区-街道').attr({'value':'0','class':'form-address-detail open'});
+      $('#cspan').removeAttr('style').html('');
+      $('#tspan').removeAttr('style').html('');
+      $('#code').removeAttr('value');
+      $('.checkbox').removeAttr('checked');
+      $('#button').attr('value','添加新地址').css('display','inline-block');
+      $('#tbutton').css('display','none');
+  });
+  //Ajax 添加  获取提交的按钮
+  $('#button').click(function(){
+    //获取所有的值
+    var name = $("input[name='name']").val();
+    var phone = $("input[name='phone']").val();
+    //拼接收货地址
+    var d = $(".open").text();
+    //详细地址
+    var x = $('#citygg').val();
+    //拼接
+    var city = d + x;
+    //获取邮编
+    var code = $('#code').val();
+    //获取默认地址按钮
+    if ($("input[type='checkbox']").attr('checked')) {
+      var status = 1;
+    }else{
+      var status = 2;
+    }
+    // 判断数据是否都符合规则
+    if (!flname) {
+        alert('收货人名错误');
+        return false;
+     }else if(!flphone){
+        alert('手机号码格式错误');
+        return false
+     }else if(!flcity){
+        alert('请选择地址,并填写详细地址');
+        return false;
+     }else if(!flcitys){
+        alert('请填写详细地址');
+        return false;
+     }else if(!flcode){
+        alert('请填写正确的邮编');
+        return false;
+     }else{
+        //全部为true  Ajax传输数据
+        $.get('/docity',{name:name,phone:phone,city:city,code:code,status:status},function(data){
+           //判断返回的值是否为数组  是的话查询出数据 否的话提示用户填写不了地址
+           if (data instanceof Array){
+              //添加成功后 将上面表单的数据清空
+              $('#nspan').removeAttr('style').html('').prev().removeAttr('value');
+              $('#pspan').removeAttr('style').html('').prev().removeAttr('value');
+              $('#citygg').removeAttr('value');
+              $('.open').html('选择省-市-区-街道').attr({'value':'0','class':'form-address-detail open'});
+              $('#code').removeAttr('value');
+              $('.checkbox').removeAttr('checked');
+              location.reload('/usercity');
+           }else{
+              $('#stop').css('color','red').html('*最多添加五条地址');
+              //删除表单的内容
+              $('#nspan').removeAttr('style').html('').prev().removeAttr('value');
+              $('#pspan').removeAttr('style').html('').prev().removeAttr('value');
+              $('#citygg').removeAttr('value');
+              $('.open').html('选择省-市-区-街道').attr({'value':'0','class':'form-address-detail open'});
+              $('#code').removeAttr('value');
+              $('.checkbox').removeAttr('checked');
+           }
+        },'json');
+     }
+  });
+
+
   //第一层
   $('#current-address').click(function(){
     $('#address-tab').css('display','block');
@@ -285,114 +480,19 @@
     $('#district').removeAttr('class').html('请选择');
     $('#street').attr('class','hide').empty();
   });
+
+   //Ajax删除
+  $('.del').click(function(){
+    //获取要删除的id
+    var id = $(this).parents('div').parents('div').attr('value');
+    var d = $(this).parents('div').parents('div:first');
+    // alert(d);
+    $.get('/citydel',{id:id},function(data){
+        if(data==1){
+          d.remove();
+        }
+    });
+  });
+
 </script>
-
-
-<div class="hr-30"></div>
-<!-- 20141216-我的收货地址-列表-start -->
-<!--表单-我的收货地址 -->
-<div class="myAddress-record hide" id="myAddress-record" style="display: block;">
-  <div class="list-group-title">
-    <table border="0" cellpadding="0" cellspacing="0">
-      <thead>
-        <tr>
-          <th class="col-name">收货人</th>
-          <th class="col-address">收货地址</th>
-          <th class="col-zip">邮编</th>
-          <th class="col-tel">手机/电话</th>
-          <th class="col-operate">操作</th>
-        </tr>
-      </thead>
-    </table>
-  </div>
-  <div class="list-group" id="list-group">
-    <div class="list-group-item" id="myAddress-area-62983138">
-      <table border="0" cellpadding="0" cellspacing="0">
-        <tbody>
-          <tr>
-            <td class="col-name">收货人</td>
-            <td class="col-address">地址</td>
-            <td class="col-zip">邮编</td>
-            <td class="col-tel"><p>手机</p></td>
-            <td class="col-operate">
-              <p class="p-edit">
-                <a class="" href="javascript:;" title="编辑">编辑</a>
-              </p>
-              <p class="p-del">
-                <a class="" href="javascript:;" title="删除">删除</a>
-              </p>
-              <p class="p-state">
-                <span class="default">默认地址</span>
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-<input type="hidden" id="gouldAddress" name="unionPaySwitch" value="1">
-<!-- <script src="/static/homes/city/csrftoken.js(1).下载"></script> -->
-</div>
-    <div class="fl u-1-5">
-<!-- 20170823-左边菜单-start -->
-<div class="mc-menu-area">
-  <div class="h"><a href=""><span>我的商城</span></a></div>
-    <div class="b">
-        <ul>
-            <li>
-                <h3 class="icon-mc-mail"><a href="/homestand"><span id="li-msg">消息中心<em></em></span></a></h3>
-            </li>
-            <li>
-                <h3 class="icon-mc-help"><a href="" target="_blank"><span>帮助中心</span></a></h3>
-            </li>
-          <li>
-                <h3 class="icon-mc-order"><span>订单中心</span></h3>
-              <ol>
-                  <li id="li-order"><a href="/homeorder"><span>我的订单</span></a></li>
-                  <li id="li-order-small" style="display: none;"></li>
-                  <li id="li-exchange"><a href=""><span>我的退换货</span></a></li>
-                  <li id="li-refunds"><a href=""><span>我的退款</span></a></li>
-                  <li id="li-recover"><a href=""><span>我的回收单</span></a></li>
-                  <li id="li-prdRemark"><a href=""><span>商品评价</span></a></li>
-                </ol>
-            </li>
-            <li>
-                <h3 class="icon-mc-asset"><span>我的资产</span></h3>
-                <ol>
-                    <li id="li-newpoint"><a href="/userlike"><span>我的收藏</span></a></li>
-                    <li id="li-coupon"><a href=""><span>我的优惠券</span></a></li>
-                    <li id="li-balance"><a href=""><span>我的代金券</span></a></li>
-                    <li id="li-petal"><a href=""><span>我的花瓣</span></a></li>
-                    <li id="li-point"><a href=""><span>等级与特权</span></a></li>
-                </ol>
-            </li>
-            <li>
-                <h3 class="icon-mc-support"><span>购买支持</span></h3>
-              <ol>
-                    <li id="li-myAddress" class="current"><a href="/usercity"><span>收货地址管理</span></a></li>
-                    <li id="li-authentication"><a href=""><span>实名认证</span></a></li>
-                    <li id="li-myAppointment"><a href=""><span>我的预约</span></a></li>
-                    <li id="li-notification"><a href=""><span>到货通知</span></a></li>
-                    <li id="li-myeasybuy"><a href=""><span>我的优享购</span></a></li>
-                    <li id="li-enterprise" class="hide"></li><!-- 优惠内购 -->
-                    <li id="li-o2o" class="hide"><a href=""><span>O2O商城</span></a></li>
-                </ol>
-            </li>
-            <li id="li-company" class="hide" style="display: none;">
-              <h3 class="icon-mc-business"><span>企业购</span></h3>
-              <ol>
-                <li id="li-companyUserInfo"></li>
-                <li id="li-companyOrder"></li>
-                <li id="li-companyOrderList"></li>
-                <li id="li-companyQues"></li>
-              </ol>
-            </li>
-        </ul>
-    </div>
-</div>
-<!-- 20170823-左边菜单-end -->
-      </div>
-  </div>
-</div>
 @endsection

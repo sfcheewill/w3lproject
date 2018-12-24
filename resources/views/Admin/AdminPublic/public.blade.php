@@ -317,6 +317,19 @@
                             <li><a href="/sendstand">站内信模板列表</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#"><i class="icol32-color-wheel"></i> 抽奖模块管理</a>
+                        <ul class="closed">
+                            <li><a href="/award/create">抽奖板块添加</a></li>
+                            <li><a href="/award">抽奖板块列表</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="icol32-shopping"></i> 优惠券管理</a>
+                        <ul class="closed">
+                            <li><a href="/mylottry">用户优惠券列表</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>         
         </div>

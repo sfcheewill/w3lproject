@@ -5,6 +5,7 @@
  <head></head>
  <link rel="stylesheet" href="/static/homes/order/ec.core.base.min.css">
  <link rel="stylesheet" href="/static/homes/order/main.min.css">
+ <script src="/static/jquery-1.7.2.min.js"></script>
  <body>
   <div class="header"> 
    <div class="layout"> 
@@ -31,11 +32,9 @@
      <!-- 2017-02-15-搜索条-焦点为search-form增加className:hover -start --> 
      <div class="search-bar relative" id="searchBar-area"> 
       <div class="search-bar-form" id="search-bar-form"> 
-       <form method="get" onsubmit="return search(this)"> 
-        <input type="text" class="text" maxlength="200" id="search-kw" autocomplete="off" /> 
+       <form method="get" action="/searchgoods"> 
+        <input type="text" class="text" name="goodsname" maxlength="200" id="search-kw" autocomplete="off" /> 
         <input type="submit" class="button" value="搜索" /> 
-        <input type="hidden" id="channelType" name="channelType" value="0" /> 
-        <input type="hidden" id="default-search" value="nova 3i|荣耀 Note10" /> 
        </form> 
       </div> 
       <div class="search-bar-key" id="search-bar-key"> 
@@ -62,7 +61,7 @@
    <div class="g"> 
     <!--面包屑 --> 
     <div class="breadcrumb-area fcn">
-     <a href="https://www.vmall.com/">首页</a>&nbsp;&gt;&nbsp;
+     <a href="/homeindex">首页</a>&nbsp;&gt;&nbsp;
      <em id="personCenter"><a href="/homeindex">我的商城</a></em>
      <em id="pathPoint">&nbsp;&gt;&nbsp;</em>
      <span id="pathTitle">我的订单</span>
@@ -76,28 +75,19 @@
       <div class="fl"> 
        <h2><span>我的订单</span></h2> 
       </div> 
-      <div class="fr"> 
-       <div class="ec-tab" id="ec-tab"> 
-        <ul> 
-         <li class="current"><a href="javascript:;" onclick="ec.member.orderList.seltime(this,1);"><span>最近六月内订单<em id="count-seltime-0">1</em></span></a></li> 
-         <li><a href="javascript:;" onclick="ec.member.orderList.seltime(this,0);"><span>六个月前订单<em id="count-seltime-1" style="display: none;">0</em></span></a></li> 
-        </ul> 
-        <div class="ec-tab-arrow" style="width: 136px; left: 0px;"></div> 
-       </div> 
-      </div> 
      </div> 
      <!-- 20141212-栏目-end --> 
      <!-- 20141222-我的订单-订单类别-start --> 
      <div class="myOrder-cate" id="myOrder-cate"> 
       <ul> 
-       <li class="current"><a href="javascript:;" onclick="ec.member.orderList.check(this,'all');"><span>全部有效订单<em></em></span></a></li> 
-       <li> <a href="javascript:;" onclick="ec.member.orderList.check(this,'unpaid');"> <span> 待支付 <em id="count-seltime-2" data-num="1"> 1 </em> </span> </a> </li> 
+       <li class="current"><a href="javascript:;" onclick="check(this,'all');"><span>全部有效订单<em></em></span></a></li> 
+       <!-- <li> <a href="javascript:;" onclick="check(this,'unpaid');"> <span> 待支付 <em id="count-seltime-2" data-num="1"> 0 </em> </span> </a> </li>  -->
+       <li> <a href="javascript:;" onclick="check(this,'unpaid');"> <span> 待支付 </span> </a> </li> 
        <em id="count-seltime-2-wechat" style="display:none"> 0 </em> 
        <em id="count-seltime-3-wechat" style="display:none"> 0 </em> 
-       <li><a href="javascript:;" onclick="ec.member.orderList.check(this,'nocomment');"><span>待评价<em id="nocommentNum" data-num="0" data-his="0" style="display: none;">0</em></span></a></li> 
-       <li><a href="javascript:;" onclick="ec.member.orderList.check(this,'send');"><span>待收货<em id="count-seltime-3" class="hide" data-num="0">0</em></span></a></li> 
-       <li><a href="javascript:;" onclick="ec.member.orderList.check(this,'finished');"><span>已完成</span></a></li> 
-       <li><a href="javascript:;" onclick="ec.member.orderList.check(this,'canceled');"><span>已取消</span></a></li> 
+       <li><a href="javascript:;" onclick="check(this,'send');"><span>待收货<em id="count-seltime-3" class="hide" data-num="0">0</em></span></a></li> 
+       <li><a href="javascript:;" onclick="check(this,'finished');"><span>已完成</span></a></li> 
+       <li><a href="javascript:;" onclick="check(this,'canceled');"><span>已取消</span></a></li> 
       </ul> 
      </div> 
      <!-- 20141222-我的订单-订单类别-end --> 
@@ -106,7 +96,7 @@
       <!-- 20141222-我的订单-列表-订单合并-start --> 
       <div class="myOrder-control" id="myOrder-control-bottom-up" style="display: none;"> 
        <label class="inputbox" for="checkAllBox"> <input class="checkbox" type="checkbox" id="checkAllBox" name="checkAllBox" /><span>全选</span> </label> 
-       <a href="javascript:;" class="button-operate-merge-pay" id="topButton" onclick="ec.member.orderList.mergePay();"><span>合并支付</span></a> 
+       <a href="javascript:;" class="button-operate-merge-pay" id="topButton" onclick="mergePay();"><span>合并支付</span></a> 
       </div> 
       <!-- 20141222-我的订单-列表-订单合并-end --> 
       <div class="list-group-title"> 
@@ -133,7 +123,7 @@
           <span class="o-no">订单号：<a href="https://www.vmall.com/member/order-28150260702" title="28150260702">{{$r->order_number}}</a></span> 
          </div> 
          <div class="col-state">
-           订单已确认&nbsp;|&nbsp; @if($r->buy_status == 1) 未支付 @else 已支付 @endif 
+           订单已确认&nbsp;|&nbsp; {{$r->buy_status}}
          </div> 
         </div> 
         <div class="o-pro"> 
@@ -147,15 +137,19 @@
             <td class="col-price"> <em>&yen;</em> <span>{{$rr->sprice}}.00</span> </td> 
             <td class="col-quty">{{$rr->quantity}}</td> 
             @if($key == 0)
-            <td rowspan="{{count($r->info)}}" class="col-pay"> <p> <em>&yen;</em> <span>{{$r->total_price}}.00</span> </p> </td> 
-            <td rowspan="{{count($r->info)}}" class="col-operate"> <p class="p-button"> <a class="button-operate-pay" href="https://www.vmall.com/payment/order-28150260702" target="_blank"> <span> 立即支付 </span> </a></p> <p class="p-link"><a href="https://www.vmall.com/member/updateToOrder-28150260702">修改订单</a></p> <p class="p-link"><a href="javascript:;" data-ordercode="28150260702" onclick="ec.member.orderList.cancel(this, 2,0);">取消订单</a></p> <p class="p-link"><a href="https://www.vmall.com/member/order-28150260702">订单详情</a></p> </td>
+              @if($r->buy_status == '未付款')
+                <td rowspan="{{count($r->info)}}" class="col-pay"> <p> <em>&yen;</em> <span>{{$r->total_price}}.00</span> </p> </td> 
+                <td rowspan="{{count($r->info)}}" class="col-operate"> <p class="p-button"> <a class="button-operate-pay" href="/orderpaynow/{{$r->id}}/{{$r->order_number}}/{{$rr->gname}} {{$rr->sdesc}}" target="_blank"> <span> 立即支付 </span> </a></p>  <p class="p-link"><a href="javascript:void(0);" class="cancel" data-id="{{$r->id}}">取消订单</a></p> <p class="p-link"><a href="/homeorder/{{$r->id}}">订单详情</a></p> </td>
+              @elseif($r->buy_status == '已付款')
+                <td rowspan="{{count($r->info)}}" class="col-pay"> <p> <em>&yen;</em> <span>{{$r->total_price}}.00</span> </p> </td> 
+                <td rowspan="{{count($r->info)}}" class="col-operate"> @if($r->order_status == '已收货') <p class="p-button"> <a class="button-operate-pay" href="javascript:void(0)"> <span> 订单评价 </span> </a></p> @elseif($r->order_status == '已发货') <p class="p-button"> <a class="button-operate-pay" href="javascript:void(0)" onclick="orderstatus(this,{{$r->id}})"> <span> 确认收货 </span> </a></p> @endif <p class="p-link">{{$r->order_status}}</p>   <p class="p-link"><a href="/homeorder/{{$r->id}}">订单详情</a></p> </td>
+              @else
+                <td rowspan="{{count($r->info)}}" class="col-pay"> <p> <em>&yen;</em> <span>{{$r->total_price}}.00</span> </p> </td> 
+                <td rowspan="{{count($r->info)}}" class="col-operate">  <p class="p-link">订单已取消</p><p class="p-link"><br><br><a href="/homeorder/{{$r->id}}">订单详情</a></p> </td>
+              @endif
             @endif 
            </tr> 
            @endforeach
-           <!--子商品对应的查询--> 
-           <!--商品级别的优惠券使用--> 
-           <!--订单级别的优惠券--> 
-           <!-- 普通商品列表 end --> 
           </tbody> 
          </table> 
         </div> 
@@ -167,7 +161,7 @@
        <label class="inputbox" id="bottomCheckBoxDiv" name="bottomCheckBoxDiv"> 
         <!-- 20140819-我的订单-合并付款-start --> <input type="checkbox" class="checkbox" id="bottomCheckAllBox" name="bottomCheckAllBox" /><span>全选</span> 
         <!-- 20140819-我的订单-合并付款-end --> </label> 
-       <a href="javascript:;" class="button-operate-merge-pay" id="bottomButton" onclick="ec.member.orderList.mergePay();"><span>合并支付</span></a> 
+       <a href="javascript:;" class="button-operate-merge-pay" id="bottomButton" onclick="mergePay();"><span>合并支付</span></a> 
       </div> 
       <!-- 20141222-我的订单-列表-订单合并-end --> 
       <div class="list-group-page"> 
@@ -207,11 +201,19 @@
                   <li id="li-prdRemark"><a href=""><span>商品评价</span></a></li>
                 </ol>
             </li>
+            <!-- 新人抽奖开始 -->
+            @if($timeout==1)
+             <li>
+                <h3 class="icon-mc-asset"><span><a href="/homeaward">新人抽奖</a></span></h3>
+              </li>
+            @endif
+            <!-- 新人抽奖结束 -->
+
             <li>
                 <h3 class="icon-mc-asset"><span>我的资产</span></h3>
                 <ol>
                     <li id="li-newpoint"><a href="/userlike"><span>我的收藏</span></a></li>
-                    <li id="li-coupon"><a href=""><span>我的优惠券</span></a></li>
+                    <li id="li-coupon"><a href="/checklottery"><span>我的优惠券</span></a></li>
                     <li id="li-balance"><a href=""><span>我的代金券</span></a></li>
                     <li id="li-petal"><a href=""><span>我的花瓣</span></a></li>
                     <li id="li-point"><a href=""><span>等级与特权</span></a></li>
@@ -247,5 +249,43 @@
    <div class="hr-80"></div> 
   </div> 
  </body>
+ <script>
+    function orderstatus(obj,id){
+      //Ajax
+      $.get('/orderstatus',{id:id},function(data){
+        if(data == 'success'){
+          //确认收货成功
+          alert('收货成功');
+          $(obj).parents('div[class="list-group-item"]').remove();
+        }
+      });
+    }
+
+    //查看不同订单
+    function check(obj,msg){
+      $('#myOrder-cate li').each(function(){
+          $(this).removeClass('current');
+      });
+      $(obj).parents('li').addClass('current');
+      //Ajax
+      $.get('/ordercheck',{msg:msg},function(data){
+        $('#list-group').html(data);
+      })
+    }
+
+    //取消订单
+    $('.cancel').live('click',function(){
+      var obj = $(this);
+      var id = $(this).attr('data-id');
+      //Ajax
+      $.get('/ordercancel',{id:id},function(data){
+        if(data == 'success'){
+          //取消成功
+          alert('取消订单成功');
+          $(obj).parents('div[class="list-group-item"]').remove();
+        }
+      });
+    });
+ </script>
 </html>
 @endsection

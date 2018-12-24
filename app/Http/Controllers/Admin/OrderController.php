@@ -15,22 +15,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //加载订单列表模板 分配数据
-        $data = DB::table('gorder')->join('users','gorder.uid','=','users.id')->join('user_city','gorder.address_id','=','user_city.id')->select(DB::raw('users.username,gorder.*,concat(name,user_city.phone,city) as address'))->paginate(5);
-
-        $order_status = [1=>'未发货',2=>'已发货',3=>'已收货'];
-        $buy_status = [1=>'未付款',2=>'已付款'];
-
-        foreach ($data as $key => $value) {
-            if(!empty($value->order_status)){
-                $data[$key]->order_status = $order_status[$value->order_status];
-            }
-            if(!empty($value->buy_status)){
-                $data[$key]->buy_status = $buy_status[$value->buy_status];
-            }
-        }
-
-
+        //显示用户
+        $data = DB::table('users')->join('gorder','users.id','=','gorder.uid')
+                                    ->select(DB::raw('DISTINCT users.*'))
+                                    ->paginate(5);
+        //加载模板
         return view('Admin.Order.index',['data'=>$data]);
     }
 
@@ -105,5 +94,41 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    //订单发货
+    public function ordersend(Request $request){
+        //获取数据
+        $id = $request->input('id');
+        $data['order_status'] = 2;
+        //修改订单状态
+        if(DB::table('gorder')->where('id','=',$id)->update($data)){
+            return 'success';
+        }else {
+            return 'error';
+        }
+    }
+
+    //查看会员对应订单
+    public function usersorder($id){
+        $data = DB::table('gorder')->join('users','gorder.uid','=','users.id')
+                                    ->join('user_city','gorder.address_id','=','user_city.id')
+                                    ->where('gorder.uid','=',$id)
+                                    ->select(DB::raw('users.username,gorder.*,concat(name,user_city.phone,city) as address'))
+                                    ->paginate(5);
+
+        $order_status = [1=>'未发货',2=>'已发货',3=>'已收货'];
+        $buy_status = [1=>'未付款',2=>'已付款',3=>'已取消'];
+
+        foreach ($data as $key => $value) {
+            if(!empty($value->order_status)){
+                $data[$key]->order_status = $order_status[$value->order_status];
+            }
+            if(!empty($value->buy_status)){
+                $data[$key]->buy_status = $buy_status[$value->buy_status];
+            }
+        }
+        //加载订单列表模板 分配数据
+        return view('Admin.Order.order',['data'=>$data]);
     }
 }

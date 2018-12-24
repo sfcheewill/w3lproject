@@ -22,8 +22,20 @@ class PersonController extends Controller
         //查询出友情链接的数据
         $link = DB::select('select * from link order By id asc limit 0,5');
 
+        $award = DB::table('users')->where('id','=',$uid)->first();
+        // 求出用户创建了多少天
+        $date = time()-strtotime($award->created_at);
+        // 判断是否过三天的日期
+        // 如果输入2,否输入1
+        // 如果没超过三天则可以进行新人抽奖
+        if ($date<(3*24*3600)) {
+            $timeout = 1;
+        }else{
+            $timeout = 2;
+        }
+
         // 加载模板
-        return view('Home.Person.index',['users_info'=>$users_info,'link'=>$link]);
+        return view('Home.Person.index',['users_info'=>$users_info,'link'=>$link,'timeout'=>$timeout]);
     }
 
     // ajax修改性别

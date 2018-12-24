@@ -16,14 +16,6 @@
           			</div>
                          
                          <div class="mws-form-row">
-                              <label class="mws-form-label">简介</label>
-                              <div class="mws-form-item">
-                                   <input type="text" class="large" name="desc" value="{{$data->desc}}">
-                              </div>
-                         </div>
-
-
-                         <div class="mws-form-row">
                               <label class="mws-form-label">图片</label>
                               <div class="mws-form-item">
                                    @foreach($data->pic as $r)
